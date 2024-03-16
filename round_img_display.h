@@ -28,12 +28,9 @@ public:
 	void paintEvent(QPaintEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
 
-	void UpdateImage(std::shared_ptr<sk::Context> ctx, std::shared_ptr<sk::WallpaperPackLoader> loader, std::shared_ptr<sk::WallpaperLocalEntity> entity);
-
 private:
 	QBitmap mask;
 	QPixmap pixmap;
-	QPixmap placeholder;
 	int radius;
 
     std::mutex pixmap_mutex_;
