@@ -28,4 +28,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
         Qt6::OpenGLWidgets
         Qt6::Multimedia
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE tc_common)
+target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new)

@@ -7,7 +7,7 @@
 #include <QImage>
 #include <QPainterPath>
 
-#include "tc_common/log.h"
+#include "tc_common_new/log.h"
 
 using namespace sk;
 
