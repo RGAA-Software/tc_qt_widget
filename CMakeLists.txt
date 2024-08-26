@@ -4,11 +4,13 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
 
 add_compile_options(/bigobj)
 set(SRCS
-    round_img_display.cpp
+        round_img_display.cpp
+        single_selected_list.cpp
+        clickable_widget.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
@@ -26,6 +28,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
         Qt6::Core
         Qt6::OpenGL
         Qt6::OpenGLWidgets
-        Qt6::Multimedia
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new)
