@@ -7,6 +7,7 @@
 
 #include <QListWidget>
 #include <QString>
+#include <map>
 
 namespace tc
 {
@@ -26,13 +27,15 @@ namespace tc
         explicit SingleSelectedList(QWidget* parent = nullptr);
 
         void UpdateItems(const std::vector<SingleItemPtr>& items);
-
+        void Select(int idx) const;
+        std::vector<SingleItemPtr> GetItems();
     private:
-        QListWidgetItem* AddItem(const SingleItemPtr& data);
+        QListWidgetItem* AddItem(const SingleItemPtr& data, int index);
 
     public:
         QListWidget* list_ = nullptr;
         std::vector<SingleItemPtr> items_;
+        std::map<int, QWidget*> select_indicators_;
     };
 
 }
