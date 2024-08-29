@@ -34,15 +34,9 @@ namespace tc
         list_->setMovement(QListView::Movement::Static);
         list_->setFlow(QListView::Flow::TopToBottom);
         list_->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
-        //list_->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
         list_->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
         list_->setStyleSheet("QListWidget {background: #ffffff;}"
                              "QListWidget::item:selected { background-color: transparent; }");
-
-        connect(list_, &QListWidget::itemClicked, this, [=, this](QListWidgetItem *item) {
-//            auto index = list_->indexFromItem(item);
-//            Select(index.row());
-        });
 
         auto layout = new NoMarginVLayout();
         layout->addWidget(list_);
@@ -78,12 +72,10 @@ namespace tc
         list_->setItemWidget(item, widget);
 
         widget->SetOnClickListener([=, this](auto w) {
-//            for (const auto[idx, ic] : select_indicators_) {
-//                ic->hide();
-//            }
-//            icon->show();
-
             Select(index);
+            if (item_click_listener_) {
+                item_click_listener_(index, w);
+            }
         });
 
         return item;
@@ -113,7 +105,11 @@ namespace tc
         }
     }
 
-    std::vector<SingleItemPtr> SingleSelectedList::GetItems() {
+    std::vector<SingleItemPtr> SingleSelectedList::GetItems() const {
         return items_;
+    }
+
+    void SingleSelectedList::SetOnItemClickListener(OnItemClickListener&& listener) {
+        item_click_listener_ = listener;
     }
 }

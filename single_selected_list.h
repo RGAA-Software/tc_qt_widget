@@ -8,6 +8,7 @@
 #include <QListWidget>
 #include <QString>
 #include <map>
+#include "click_listener.h"
 
 namespace tc
 {
@@ -28,7 +29,9 @@ namespace tc
 
         void UpdateItems(const std::vector<SingleItemPtr>& items);
         void Select(int idx) const;
-        std::vector<SingleItemPtr> GetItems();
+        std::vector<SingleItemPtr> GetItems() const;
+        void SetOnItemClickListener(OnItemClickListener&& listener);
+
     private:
         QListWidgetItem* AddItem(const SingleItemPtr& data, int index);
 
@@ -36,6 +39,7 @@ namespace tc
         QListWidget* list_ = nullptr;
         std::vector<SingleItemPtr> items_;
         std::map<int, QWidget*> select_indicators_;
+        OnItemClickListener item_click_listener_;
     };
 
 }

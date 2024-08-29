@@ -14,6 +14,7 @@ namespace tc
 
     using OnClickListener = std::function<void(QWidget*)>;
     using OnDoubleClickListener = std::function<void(QWidget*)>;
+    using OnItemClickListener = std::function<void(int idx, QWidget*)>;
 
 }
 
