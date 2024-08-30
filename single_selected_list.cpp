@@ -56,6 +56,13 @@ namespace tc
         name->setStyleSheet("padding-left: 10px;");
         root_layout->addWidget(name);
 
+        auto origin = new QLabel(widget);
+        origin->setObjectName("origin");
+        origin->setText("✪");
+        origin->hide();
+        root_layout->addSpacing(10);
+        root_layout->addWidget(origin);
+
         auto icon_size = QSize(40, 40);
         auto icon = new QLabel(widget);
         icon->setObjectName("icon");
@@ -64,7 +71,7 @@ namespace tc
         icon->setStyleSheet(R"( background-image: url(:resources/image/ic_check.svg);
                                     background-repeat:no-repeat;
                                     background-position: center center;)");
-        select_indicators_.insert({index, icon});
+        select_widgets_.insert({index, widget});
         root_layout->addStretch();
         root_layout->addWidget(icon);
         root_layout->addSpacing(10);
@@ -96,7 +103,11 @@ namespace tc
         if (idx < 0 || idx >= list_->count()) {
             return;
         }
-        for (const auto[i, ic] : select_indicators_) {
+        for (const auto[i, widget] : select_widgets_) {
+            auto ic = widget->findChild<QLabel*>("icon");
+            if (ic == nullptr) {
+                continue;
+            }
             if (i == idx) {
                 ic->show();
             } else {
@@ -111,5 +122,18 @@ namespace tc
 
     void SingleSelectedList::SetOnItemClickListener(OnItemClickListener&& listener) {
         item_click_listener_ = listener;
+    }
+
+    void SingleSelectedList::SelectByName(const std::string& name) {
+        for (const auto[i, widget] : select_widgets_) {
+            auto lbl_name = widget->findChild<QLabel*>("name");
+            if (lbl_name == nullptr) {
+                continue;
+            }
+            if (lbl_name->text().toStdString() == name) {
+                Select(i);
+                break;
+            }
+        }
     }
 }
