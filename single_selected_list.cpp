@@ -89,6 +89,8 @@ namespace tc
     }
 
     void SingleSelectedList::UpdateItems(const std::vector<SingleItemPtr> &items) {
+        list_->clear();
+        select_widgets_.clear();
         list_->setFixedWidth(this->width());
         items_ = items;
         int index = 0;
