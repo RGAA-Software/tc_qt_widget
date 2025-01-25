@@ -10,29 +10,25 @@
 #include <memory>
 #include <mutex>
 
-namespace sk {
-	class Data;
-	class Context;
-	class WallpaperLocalEntity;
-	class WallpaperPackLoader;
+namespace tc
+{
+    class RoundImageDisplay : public QLabel {
+
+    public:
+        RoundImageDisplay(const QString &path, int width, int height, int radius, QWidget *parent = nullptr);
+        RoundImageDisplay(const QPixmap &pixmap, int radius, QWidget *parent = nullptr);
+        ~RoundImageDisplay() override;
+        void paintEvent(QPaintEvent *event) override;
+        void resizeEvent(QResizeEvent *event) override;
+
+        void UpdatePixmap(const QPixmap& pixmap);
+
+    private:
+        QBitmap mask;
+        QPixmap pixmap;
+        int radius;
+        std::mutex pixmap_mutex_;
+
+    };
+
 }
-
-class RoundImageDisplay : public QLabel {
-	Q_OBJECT
-public:
-
-	RoundImageDisplay(const QString& path, int width, int height, int radius, QWidget * parent = nullptr);
-    RoundImageDisplay(const QPixmap& pixmap, int radius, QWidget * parent = nullptr);
-	~RoundImageDisplay() override;
-
-	void paintEvent(QPaintEvent* event) override;
-	void resizeEvent(QResizeEvent* event) override;
-
-private:
-	QBitmap mask;
-	QPixmap pixmap;
-	int radius;
-
-    std::mutex pixmap_mutex_;
-
-};

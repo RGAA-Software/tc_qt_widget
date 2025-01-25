@@ -11,6 +11,10 @@ set(SRCS
         round_img_display.cpp
         single_selected_list.cpp
         clickable_widget.cpp
+        cover_widget.cpp
+        sized_msg_box.cpp
+        custom_tab_btn.cpp
+
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
