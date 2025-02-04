@@ -56,7 +56,7 @@ namespace tc
 
         auto font = painter.font();
         //font.setBold(true);
-        font.setPixelSize(14);
+        font.setPixelSize(13);
         painter.setFont(font);
 
         if (!active) {
