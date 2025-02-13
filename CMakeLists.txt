@@ -1,4 +1,4 @@
-project(tc_qt_widget VERSION 0.1 LANGUAGES CXX)
+project(tc_qt_widget)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
