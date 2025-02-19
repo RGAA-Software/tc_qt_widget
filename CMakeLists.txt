@@ -1,0 +1,36 @@
+project(tc_qt_widget)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
+
+add_compile_options(/bigobj)
+set(SRCS
+        round_img_display.cpp
+        single_selected_list.cpp
+        clickable_widget.cpp
+        cover_widget.cpp
+        sized_msg_box.cpp
+        custom_tab_btn.cpp
+
+)
+
+add_library(${PROJECT_NAME} ${SRCS})
+if (APPLE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+            MACOSX_BUNDLE_GUI_IDENTIFIER com.tc.qt.widget
+            MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+            MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+            MACOSX_BUNDLE TRUE
+            WIN32_EXECUTABLE TRUE
+    )
+endif()
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
+        Qt6::Core
+        Qt6::OpenGL
+        Qt6::OpenGLWidgets
+)
+target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new)
