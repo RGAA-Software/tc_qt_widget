@@ -17,6 +17,10 @@ namespace tc
     void TcImageButton::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
         painter.setPen(Qt::NoPen);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        painter.setRenderHint(QPainter::VerticalSubpixelPositioning);
+        painter.setRenderHint(QPainter::LosslessImageRendering);
 
         int color = 0xffffff;
         if (pressed_) {
