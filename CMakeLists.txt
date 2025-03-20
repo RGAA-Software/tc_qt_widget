@@ -15,6 +15,7 @@ set(SRCS
         sized_msg_box.cpp
         custom_tab_btn.cpp
         tc_image_button.cpp
+        tc_qr_widget.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
