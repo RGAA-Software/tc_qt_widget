@@ -4,14 +4,14 @@
 #include <QPen>
 #include <QBrush>
 #include <QRadialGradient>
+#include <QLabel>
 
 namespace tc
 {
+    
     CustomTabBtn::CustomTabBtn(const QColor& inactive_color, const QColor& hover_color, QWidget *parent) : QPushButton(parent) {
-        //active_bg.load(":/images/resources/btn_bg.png");
-
-        this->inactive_color = inactive_color;
-        this->hover_color = hover_color;
+        this->inactive_color_ = inactive_color;
+        this->hover_color_ = hover_color;
     }
 
     CustomTabBtn::~CustomTabBtn() {
@@ -45,7 +45,7 @@ namespace tc
     }
 
     void CustomTabBtn::SetText(const QString &text) {
-        this->text = text;
+        this->text_ = text;
         repaint();
     }
 
@@ -59,18 +59,18 @@ namespace tc
         font.setPixelSize(13);
         painter.setFont(font);
 
-        if (!active) {
+        if (!active_) {
             QRadialGradient gradient(width() / 2, height() / 2, width() * 1.2, width() / 3, height() / 2);
-            gradient.setColorAt(0, hover_color);
+            gradient.setColorAt(0, hover_color_);
             gradient.setColorAt(1, 0xffffff);
 
             int font_color = 0;
             QBrush brush(Qt::BrushStyle::SolidPattern);
-            if (enter) {
+            if (enter_) {
                 brush = QBrush(gradient);
                 font_color = 0xffffff;
             } else {
-                brush.setColor(enter ? hover_color : inactive_color);
+                brush.setColor(enter_ ? hover_color_ : inactive_color_);
                 font_color = 0x333333;
             }
 
@@ -80,16 +80,22 @@ namespace tc
             painter.drawRoundedRect(0 + offset, 0 + offset, width() - 2 * offset, height() - 2 * offset, border_radius_, border_radius_);
 
             QFontMetrics fm = painter.fontMetrics();
-            QSize s = fm.size(0, text);
-            int width = s.width();//fm.width(text);
+            QSize s = fm.size(0, text_);
+            int width = s.width();//fm.width(text_);
             int height = fm.descent() + fm.ascent();
             painter.setPen(QPen(QColor(font_color)));
-            painter.drawText((this->width() - width) / 2, (this->height() - height) / 2, width, height, 0, text);
-        } else {
+            if (!lbl_icon_) {
+                painter.drawText((this->width() - width) / 2, (this->height() - height) / 2, width, height, 0, text_);
+            }
+            else {
+                painter.drawText(offset_x_ + lbl_icon_->width() + 10, (this->height() - height) / 2, width, height, 0, text_);
+            }
+        }
+        else {
             //QRect rect(0, 0, width(), height());
             //painter.drawPixmap(rect, active_bg);
             QRadialGradient gradient(width() / 2, height() / 2, width() * 1.2, width() / 4, height() / 2);
-            gradient.setColorAt(0, hover_color);
+            gradient.setColorAt(0, hover_color_);
             gradient.setColorAt(1, QColor::fromRgbF(0, 0, 0, 0));
             auto brush = QBrush(gradient);
             painter.setBrush(brush);
@@ -98,37 +104,72 @@ namespace tc
             painter.drawRoundedRect(0 + offset, 0 + offset, width() - 2 * offset, height() - 2 * offset, border_radius_, border_radius_);
 
             QFontMetrics fm = painter.fontMetrics();
-            QSize s = fm.size(0, text);
-            int width = s.width();//fm.width(text);
+            QSize s = fm.size(0, text_);
+            int width = s.width();//fm.width(text_);
             int height = fm.descent() + fm.ascent();
             painter.setPen(QPen(QColor(0xffffff)));
-            painter.drawText((this->width() - width) / 2, (this->height() - height) / 2, width, height, 0, text);
-
+            if (!lbl_icon_) {
+                painter.drawText((this->width() - width) / 2, (this->height() - height) / 2, width, height, 0, text_);
+            }
+            else {
+                painter.drawText(offset_x_ + lbl_icon_->width() + 10, (this->height() - height) / 2, width, height, 0, text_);
+            }
         }
 
-        //QPushButton::paintEvent(event);
+        QPushButton::paintEvent(event);
     }
 
     void CustomTabBtn::enterEvent(QEnterEvent *event) {
         QPushButton::enterEvent(event);
-        enter = true;
+        enter_ = true;
         repaint();
     }
 
     void CustomTabBtn::leaveEvent(QEvent *event) {
         QPushButton::leaveEvent(event);
-        enter = false;
+        enter_ = false;
         repaint();
     }
 
     void CustomTabBtn::ToActiveStatus() {
-        active = true;
+        active_ = true;
+        QString style = R"(background-image: url(%1);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    )";
+        style = style.arg(selected_img_uri_);
+        if (lbl_icon_) {
+            lbl_icon_->setStyleSheet(style);
+        }
         repaint();
     }
 
     void CustomTabBtn::ToInActiveStatus() {
-        active = false;
+        active_ = false;
+        QString style = R"(background-image: url(%1);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    )";
+        style = style.arg(normal_img_uri_);
+        if (lbl_icon_) {
+            lbl_icon_->setStyleSheet(style);
+        }
         repaint();
+    }
+
+    void CustomTabBtn::AddIcon(const QString& selected_uri, const QString& normal_uri, int size, int offset_x) {
+        this->selected_img_uri_ = selected_uri;
+        this->normal_img_uri_ = normal_uri;
+        this->offset_x_ = offset_x;
+        lbl_icon_ = new QLabel(this);
+        lbl_icon_->setFixedSize(size, size);
+    }
+
+    void CustomTabBtn::resizeEvent(QResizeEvent *event) {
+        if (!lbl_icon_) {
+            return;
+        }
+        lbl_icon_->setGeometry(offset_x_, (this->height()-lbl_icon_->height())/2, lbl_icon_->width(), lbl_icon_->height());
     }
 
 }

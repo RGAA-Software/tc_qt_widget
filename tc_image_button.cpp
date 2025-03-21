@@ -3,15 +3,32 @@
 //
 
 #include "tc_image_button.h"
+#include <QtSvg/QSvgRenderer>
 
 namespace tc
 {
 
     TcImageButton::TcImageButton(const QString& uri, const QSize& scale_size, QWidget* parent) : QWidget(parent) {
-        pixmap_ = QPixmap::fromImage(QImage(uri));
-        if (scale_size.width() > 0 && scale_size.height() > 0) {
-            pixmap_ = pixmap_.scaled(scale_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        img_uri_ = uri;
+        if (!img_uri_.contains(".svg")) {
+            pixmap_ = QPixmap::fromImage(QImage(uri));
+            if (scale_size.width() > 0 && scale_size.height() > 0) {
+                pixmap_ = pixmap_.scaled(scale_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
         }
+        else {
+            renderer_.load(img_uri_);
+        }
+    }
+
+    void TcImageButton::SetColor(int normal_color, int hover_color, int pressed_color) {
+        this->normal_color_ = normal_color;
+        this->hover_color_ = hover_color;
+        this->pressed_color_ = pressed_color;
+    }
+
+    void TcImageButton::SetRoundRadius(int radius) {
+        this->round_radius_ = radius;
     }
 
     void TcImageButton::paintEvent(QPaintEvent *event) {
@@ -22,20 +39,30 @@ namespace tc
         painter.setRenderHint(QPainter::VerticalSubpixelPositioning);
         painter.setRenderHint(QPainter::LosslessImageRendering);
 
-        int color = 0xffffff;
         if (pressed_) {
-            color = 0xdddddd;
+            painter.setBrush(QBrush(pressed_color_));
         }
         else if (enter_) {
-            color = 0xeeeeee;
+            painter.setBrush(QBrush(hover_color_));
         }
-        painter.setBrush(QBrush(color));
-        painter.drawRoundedRect(this->rect(), 4, 4);
+        else {
+            if (normal_color_ != 0) {
+                painter.setBrush(QBrush(normal_color_));
+            }
+            else {
+                painter.setBrush(Qt::NoBrush);
+            }
+        }
+        painter.drawRoundedRect(this->rect(), round_radius_, round_radius_);
 
         painter.setRenderHint(QPainter::Antialiasing, true);
         if (!pixmap_.isNull()) {
             painter.drawPixmap((this->width() - pixmap_.width())/2, (this->height() - pixmap_.height())/2, pixmap_);
         }
+
+
+        renderer_.render(&painter, this->rect());
+
     }
 
     void TcImageButton::enterEvent(QEnterEvent *event) {
