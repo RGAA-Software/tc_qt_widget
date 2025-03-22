@@ -34,6 +34,10 @@ namespace tc
         void resizeEvent(QResizeEvent *event) override;
 
     private:
+        void SetIconSelected();
+        void SetIconNormal();
+
+    private:
         QColor hover_color_ = QColor(255, 160, 90);
         QColor inactive_color_ = QColor(160, 160, 160);
         bool active_ = false;

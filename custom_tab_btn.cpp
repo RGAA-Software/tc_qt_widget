@@ -122,38 +122,28 @@ namespace tc
     void CustomTabBtn::enterEvent(QEnterEvent *event) {
         QPushButton::enterEvent(event);
         enter_ = true;
+        SetIconSelected();
         repaint();
     }
 
     void CustomTabBtn::leaveEvent(QEvent *event) {
         QPushButton::leaveEvent(event);
         enter_ = false;
+        if (!active_) {
+            SetIconNormal();
+        }
         repaint();
     }
 
     void CustomTabBtn::ToActiveStatus() {
         active_ = true;
-        QString style = R"(background-image: url(%1);
-                        background-repeat: no-repeat;
-                        background-position: center;
-                    )";
-        style = style.arg(selected_img_uri_);
-        if (lbl_icon_) {
-            lbl_icon_->setStyleSheet(style);
-        }
+        SetIconSelected();
         repaint();
     }
 
     void CustomTabBtn::ToInActiveStatus() {
         active_ = false;
-        QString style = R"(background-image: url(%1);
-                        background-repeat: no-repeat;
-                        background-position: center;
-                    )";
-        style = style.arg(normal_img_uri_);
-        if (lbl_icon_) {
-            lbl_icon_->setStyleSheet(style);
-        }
+        SetIconNormal();
         repaint();
     }
 
@@ -170,6 +160,28 @@ namespace tc
             return;
         }
         lbl_icon_->setGeometry(offset_x_, (this->height()-lbl_icon_->height())/2, lbl_icon_->width(), lbl_icon_->height());
+    }
+
+    void CustomTabBtn::SetIconSelected() {
+        QString style = R"(background-image: url(%1);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    )";
+        style = style.arg(selected_img_uri_);
+        if (lbl_icon_) {
+            lbl_icon_->setStyleSheet(style);
+        }
+    }
+
+    void CustomTabBtn::SetIconNormal() {
+        QString style = R"(background-image: url(%1);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    )";
+        style = style.arg(normal_img_uri_);
+        if (lbl_icon_) {
+            lbl_icon_->setStyleSheet(style);
+        }
     }
 
 }
