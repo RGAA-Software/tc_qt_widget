@@ -4,6 +4,7 @@
 
 #include "sized_msg_box.h"
 #include "no_margin_layout.h"
+#include "tc_qt_widget/tc_pushbutton.h"
 #include <QLabel>
 #include <QPushButton>
 
@@ -88,7 +89,8 @@ namespace tc
             auto btn_size = QSize(90, 28);
             item_layout->addStretch();
             if (cancel) {
-                auto btn_cancel = new QPushButton(tr("Cancel"), this);
+                auto btn_cancel = new TcPushButton(this);
+                btn_cancel->SetTextId("id_cancel");
                 btn_cancel->setProperty("class", "danger");
                 btn_cancel_ = btn_cancel;
                 btn_cancel->setFixedSize(btn_size);
@@ -97,7 +99,8 @@ namespace tc
             }
 
             if (ok) {
-                auto btn_ok = new QPushButton(tr("OK"), this);
+                auto btn_ok = new TcPushButton(this);
+                btn_ok->SetTextId("id_ok");
                 btn_ok_ = btn_ok;
                 btn_ok->setFixedSize(btn_size);
                 item_layout->addWidget(btn_ok);

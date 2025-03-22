@@ -39,4 +39,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
         Qt6::OpenGL
         Qt6::OpenGLWidgets
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new)
+target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new tc_translator)

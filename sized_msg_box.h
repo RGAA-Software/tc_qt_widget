@@ -13,6 +13,8 @@
 
 namespace tc
 {
+    class TcPushButton;
+
     class SizedMessageBox : public QDialog {
     public:
 
@@ -46,8 +48,8 @@ namespace tc
         int width_{};
         int height_{};
         QLabel* lbl_message_ = nullptr;
-        QPushButton* btn_cancel_ = nullptr;
-        QPushButton* btn_ok_ = nullptr;
+        TcPushButton* btn_cancel_ = nullptr;
+        TcPushButton* btn_ok_ = nullptr;
         std::function<void()> closed_callback_;
     };
 }
