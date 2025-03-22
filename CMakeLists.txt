@@ -6,6 +6,8 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
 
+add_subdirectory(translator)
+
 add_compile_options(/bigobj)
 set(SRCS
         round_img_display.cpp
@@ -16,6 +18,9 @@ set(SRCS
         custom_tab_btn.cpp
         tc_image_button.cpp
         tc_qr_widget.cpp
+        tc_label.cpp
+        tc_font_manager.cpp
+        tc_pushbutton.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})

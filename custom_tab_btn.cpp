@@ -9,7 +9,8 @@
 namespace tc
 {
     
-    CustomTabBtn::CustomTabBtn(const QColor& inactive_color, const QColor& hover_color, QWidget *parent) : QPushButton(parent) {
+    CustomTabBtn::CustomTabBtn(const QColor& inactive_color, const QColor& hover_color, QWidget *parent)
+        : QPushButton(parent), TcTranslator(this) {
         this->inactive_color_ = inactive_color;
         this->hover_color_ = hover_color;
     }
@@ -44,8 +45,21 @@ namespace tc
         QPushButton::mouseReleaseEvent(event);
     }
 
-    void CustomTabBtn::SetText(const QString &text) {
-        this->text_ = text;
+    void CustomTabBtn::SetTextId(const QString &id) {
+        if (id.isEmpty()) {
+            return;
+        }
+        TcTranslator::SetTextId(id);
+        this->text_ = tcTr(text_id_);
+        repaint();
+    }
+
+    void CustomTabBtn::OnTranslate(tc::LanguageKind kind) {
+        TcTranslator::OnTranslate(kind);
+        if (text_id_.isEmpty()) {
+            return;
+        }
+        this->text_ = tcTr(text_id_);
         repaint();
     }
 

@@ -8,11 +8,12 @@
 #include <QPaintEvent>
 #include <QPixmap>
 #include <QLabel>
+#include "translator/tc_translator.h"
 
 namespace tc
 {
 
-    class CustomTabBtn : public QPushButton {
+    class CustomTabBtn : public QPushButton, public TcTranslator {
     public:
         explicit CustomTabBtn(const QColor& inactive_color, const QColor& hover_color, QWidget *parent = 0);
         ~CustomTabBtn() override;
@@ -23,8 +24,9 @@ namespace tc
         void ToActiveStatus();
         void ToInActiveStatus();
 
-        void SetText(const QString &text);
         void AddIcon(const QString& selected_uri, const QString& normal_uri, int size, int offset_x);
+        void SetTextId(const QString &id) override;
+        void OnTranslate(tc::LanguageKind kind) override;
 
         void mousePressEvent(QMouseEvent *event) override;
         void mouseReleaseEvent(QMouseEvent *event) override;
