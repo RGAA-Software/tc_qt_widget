@@ -73,13 +73,15 @@ namespace tc
     }
 
     SizedMessageBox::SizedMessageBox(const QString& title, bool ok, bool cancel, QWidget* parent) {
-        setWindowFlags(Qt::FramelessWindowHint);
-        setAttribute(Qt::WA_TranslucentBackground);
+        if (false) {
+            setWindowFlags(Qt::FramelessWindowHint);
+            setAttribute(Qt::WA_TranslucentBackground);
+        }
 
         auto layout = new NoMarginVLayout();
 
         // title bar
-        {
+        if (false) {
             auto titlebar = new TcCustomTitleBar(title, this);
             title_bar_ = titlebar;
             layout->addSpacing(shadow_offset + titlebar->height());
@@ -96,12 +98,12 @@ namespace tc
             lbl_message->setWordWrap(true);
             lbl_message->setStyleSheet("font-size: 15px;");
             lbl_message_ = lbl_message;
-            item_layout->addSpacing(29);
+            item_layout->addSpacing(20);
             item_layout->addWidget(lbl_message);
-            item_layout->addSpacing(29);
+            item_layout->addSpacing(20);
             layout->addLayout(item_layout);
         }
-        layout->addStretch(111);
+        layout->addStretch();
         {
             auto item_layout = new NoMarginHLayout();
             auto btn_size = QSize(90, 28);
@@ -127,26 +129,34 @@ namespace tc
 
             layout->addLayout(item_layout);
         }
-        layout->addSpacing(30);
+        layout->addSpacing(20);
         setLayout(layout);
 
         WidgetHelper::AddShadow(this, 0x777777, shadow_offset);
     }
 
     void SizedMessageBox::paintEvent(QPaintEvent *event) {
-        QPainter painter(this);
-        painter.setRenderHint(QPainter::RenderHint::Antialiasing);
-        int radius = 4;
-        painter.setPen(Qt::NoPen);
-        painter.setBrush(QBrush(QColor(0xffffff)));
-        int padding = shadow_offset;
-        QRect inner_rect(padding, padding, this->rect().width()-padding*2, this->rect().height()-padding*2);
-        painter.drawRoundedRect(inner_rect, radius, radius);
+        if (title_bar_) {
+            QPainter painter(this);
+            painter.setRenderHint(QPainter::RenderHint::Antialiasing);
+            int radius = 4;
+            painter.setPen(Qt::NoPen);
+            painter.setBrush(QBrush(QColor(0xffffff)));
+            int padding = shadow_offset;
+            QRect inner_rect(padding, padding, this->rect().width() - padding * 2, this->rect().height() - padding * 2);
+            painter.drawRoundedRect(inner_rect, radius, radius);
+        }
+        else {
+            QDialog::paintEvent(event);
+        }
     }
 
     void SizedMessageBox::resizeEvent(QResizeEvent* evt) {
-        auto title_bar_offset = shadow_offset + 2;
-        title_bar_->setGeometry(title_bar_offset, title_bar_offset, evt->size().width() - 2*title_bar_offset, title_bar_->height());
+        if (title_bar_) {
+            auto title_bar_offset = shadow_offset + 2;
+            title_bar_->setGeometry(title_bar_offset, title_bar_offset, evt->size().width() - 2 * title_bar_offset,
+                                    title_bar_->height());
+        }
     }
 
 }
