@@ -16,6 +16,11 @@ namespace tc
     TcCustomTitleBarDialog::TcCustomTitleBarDialog(const QString& title, QWidget* parent) : QMainWindow(parent) {
         setWindowModality(Qt::ApplicationModal);
         //setAttribute(Qt::WA_DeleteOnClose);
+        title_ = title;
+        root_layout_ = new NoMarginVLayout();
+        central_widget_ = new QWidget(this);
+        central_widget_->setLayout(root_layout_);
+        setCentralWidget(central_widget_);
 
         (new MainWindowWrapper(nullptr, this))
             ->ShowProfile(false)
@@ -23,12 +28,10 @@ namespace tc
             ->ShowPinTop(false)
             ->ShowMin(false)
             ->ShowMax(false)
-            ->Setup(title);
+            ->Setup(title_);
+    }
 
-        root_layout_ = new NoMarginVLayout();
-        central_widget_ = new QWidget(this);
-        central_widget_->setLayout(root_layout_);
-        setCentralWidget(central_widget_);
-
+    void TcCustomTitleBarDialog::Show() {
+        this->show();
     }
 }

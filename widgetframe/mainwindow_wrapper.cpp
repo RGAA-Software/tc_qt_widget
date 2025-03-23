@@ -180,11 +180,15 @@ namespace tc
         QObject::connect(windowBar, &QWK::WindowBar::closeRequested, window_, &QWidget::close);
 
         QObject::connect(windowBar, &QWK::WindowBar::settingsRequested, window_, [=, this]() {
-            notifier_->SendAppMessage(MsgTitleBarSettingsClicked{});
+            if (notifier_) {
+                notifier_->SendAppMessage(MsgTitleBarSettingsClicked{});
+            }
         });
 
         QObject::connect(windowBar, &QWK::WindowBar::avatarRequested, window_, [=, this]() {
-            notifier_->SendAppMessage(MsgTitleBarAvatarClicked{});
+            if (notifier_) {
+                notifier_->SendAppMessage(MsgTitleBarAvatarClicked{});
+            }
         });
 
 #endif

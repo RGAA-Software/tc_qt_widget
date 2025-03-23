@@ -51,7 +51,7 @@ namespace tc
 
 //
 
-    void TcTranslatorManager::InitLanguage() {
+    void TcTranslatorManager::InitLanguage(LanguageKind kind) {
         auto sys_name = QLocale::system().bcp47Name();
         LOGI("system.bcp47 name: {}", sys_name.toStdString());
 //        sys_name = QLocale(QLocale::Chinese, QLocale::China).bcp47Name();    // zh
@@ -67,11 +67,14 @@ namespace tc
 //        sys_name =  QLocale(QLocale::Japanese, QLocale::Japan).bcp47Name();   // ja
 //        LOGI("system.bcp47 name: {}", sys_name.toStdString());
 
+        LanguageKind target_kind = kind;
         auto sp = SharedPreference::Instance();
-        auto using_lang = sp->GetInt(kUsingLanguage, kDefaultLang);
-        LOGI("using language: {}", using_lang);
+        if (kind == LanguageKind::kDefaultLang) {
+            target_kind = (LanguageKind)sp->GetInt(kUsingLanguage, kDefaultLang);
+            LOGI("using language: {}", (int)target_kind);
+        }
 
-        if (using_lang == kDefaultLang) {
+        if (target_kind == kDefaultLang) {
             if (sys_name == "zh") {
                 this->LoadLanguage(kSimpleCN);
                 sp->PutInt(kUsingLanguage, kSimpleCN);
@@ -89,7 +92,7 @@ namespace tc
             }
         }
         else {
-            this->LoadLanguage((LanguageKind)using_lang);
+            this->LoadLanguage((LanguageKind)target_kind);
         }
     }
 

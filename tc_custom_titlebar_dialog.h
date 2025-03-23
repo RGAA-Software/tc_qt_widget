@@ -16,10 +16,12 @@ namespace tc
     class TcCustomTitleBarDialog : public QMainWindow {
     public:
         explicit TcCustomTitleBarDialog(const QString& title, QWidget* parent = nullptr);
+        void Show();
 
     protected:
         QWidget* central_widget_ = nullptr;
         NoMarginVLayout* root_layout_ = nullptr;
+        QString title_;
     };
 
 }

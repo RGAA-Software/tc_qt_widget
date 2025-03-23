@@ -52,7 +52,7 @@ namespace tc
             return &mgr;
         }
 
-        void InitLanguage();
+        void InitLanguage(LanguageKind kind = LanguageKind::kDefaultLang);
         bool LoadLanguage(LanguageKind kind);
         bool LoadLanguage(const QString &file);
         QString GetTrString(const QString &id);
