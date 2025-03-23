@@ -7,6 +7,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
 
 add_subdirectory(translator)
+add_subdirectory(widgetframe)
 
 add_compile_options(/bigobj)
 set(SRCS
@@ -21,6 +22,8 @@ set(SRCS
         tc_label.cpp
         tc_font_manager.cpp
         tc_pushbutton.cpp
+        tc_custom_titlebar.cpp
+        tc_custom_titlebar_dialog.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})

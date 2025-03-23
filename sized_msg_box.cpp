@@ -5,15 +5,18 @@
 #include "sized_msg_box.h"
 #include "no_margin_layout.h"
 #include "tc_qt_widget/tc_pushbutton.h"
+#include "tc_qt_widget/widget_helper.h"
+#include "tc_qt_widget/tc_custom_titlebar.h"
 #include <QLabel>
 #include <QPushButton>
+#include <QPainter>
 
 namespace tc
 {
 
     std::shared_ptr<SizedMessageBox> SizedMessageBox::MakeOkBox(const QString& title, const QString& msg) {
-        auto msg_box = std::make_shared<SizedMessageBox>(true, false);
-        msg_box->Resize(400, 220);
+        auto msg_box = std::make_shared<SizedMessageBox>(title, true, false);
+        msg_box->Resize(410, 220);
         msg_box->setWindowTitle(title);
         msg_box->lbl_message_->setText(msg);
 
@@ -24,8 +27,8 @@ namespace tc
     }
 
     std::shared_ptr<SizedMessageBox> SizedMessageBox::MakeOkCancelBox(const QString& title, const QString& msg) {
-        auto msg_box = std::make_shared<SizedMessageBox>(true, true);
-        msg_box->Resize(400, 220);
+        auto msg_box = std::make_shared<SizedMessageBox>(title, true, true);
+        msg_box->Resize(410, 220);
         msg_box->setWindowTitle(title);
         msg_box->lbl_message_->setText(msg);
 
@@ -40,8 +43,8 @@ namespace tc
 
     std::shared_ptr<SizedMessageBox> SizedMessageBox::Make2BtnsBox(const QString& title, const QString& msg,
                                                          const QString& btn_left_text, const QString& btn_right_text) {
-        auto msg_box = std::make_shared<SizedMessageBox>(true, true);
-        msg_box->Resize(400, 220);
+        auto msg_box = std::make_shared<SizedMessageBox>(title, true, true);
+        msg_box->Resize(410, 220);
         msg_box->setWindowTitle(title);
         msg_box->lbl_message_->setText(msg);
         msg_box->btn_ok_->setText(btn_right_text);
@@ -69,18 +72,33 @@ namespace tc
         return box;
     }
 
-    SizedMessageBox::SizedMessageBox(bool ok, bool cancel, QWidget* parent) {
+    SizedMessageBox::SizedMessageBox(const QString& title, bool ok, bool cancel, QWidget* parent) {
+        setWindowFlags(Qt::FramelessWindowHint);
+        setAttribute(Qt::WA_TranslucentBackground);
+
         auto layout = new NoMarginVLayout();
-        layout->addSpacing(30);
+
+        // title bar
+        {
+            auto titlebar = new TcCustomTitleBar(title, this);
+            title_bar_ = titlebar;
+            layout->addSpacing(shadow_offset + titlebar->height());
+
+            titlebar->SetCloseClickCallback([this]() {
+                this->done(1);
+            });
+        }
+
+        layout->addSpacing(20);
         {
             auto item_layout = new NoMarginHLayout();
             auto lbl_message = new QLabel(this);
             lbl_message->setWordWrap(true);
             lbl_message->setStyleSheet("font-size: 15px;");
             lbl_message_ = lbl_message;
-            item_layout->addSpacing(30);
+            item_layout->addSpacing(29);
             item_layout->addWidget(lbl_message);
-            item_layout->addSpacing(30);
+            item_layout->addSpacing(29);
             layout->addLayout(item_layout);
         }
         layout->addStretch(111);
@@ -109,8 +127,26 @@ namespace tc
 
             layout->addLayout(item_layout);
         }
-        layout->addSpacing(15);
+        layout->addSpacing(30);
         setLayout(layout);
+
+        WidgetHelper::AddShadow(this, 0x777777, shadow_offset);
+    }
+
+    void SizedMessageBox::paintEvent(QPaintEvent *event) {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::RenderHint::Antialiasing);
+        int radius = 4;
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QBrush(QColor(0xffffff)));
+        int padding = shadow_offset;
+        QRect inner_rect(padding, padding, this->rect().width()-padding*2, this->rect().height()-padding*2);
+        painter.drawRoundedRect(inner_rect, radius, radius);
+    }
+
+    void SizedMessageBox::resizeEvent(QResizeEvent* evt) {
+        auto title_bar_offset = shadow_offset + 2;
+        title_bar_->setGeometry(title_bar_offset, title_bar_offset, evt->size().width() - 2*title_bar_offset, title_bar_->height());
     }
 
 }

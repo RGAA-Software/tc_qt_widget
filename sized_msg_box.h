@@ -14,6 +14,7 @@
 namespace tc
 {
     class TcPushButton;
+    class TcCustomTitleBar;
 
     class SizedMessageBox : public QDialog {
     public:
@@ -25,7 +26,7 @@ namespace tc
         static std::shared_ptr<SizedMessageBox> MakeErrorOkBox(const QString& title, const QString& msg);
         static std::shared_ptr<SizedMessageBox> MakeInfoOkBox(const QString& title, const QString& msg);
 
-        explicit SizedMessageBox(bool ok, bool cancel, QWidget* parent = nullptr);
+        explicit SizedMessageBox(const QString& title, bool ok, bool cancel, QWidget* parent = nullptr);
 
         void Resize(int width, int height) {
             this->width_ = width;
@@ -44,6 +45,9 @@ namespace tc
             closed_callback_ = std::move(cbk);
         }
 
+        void paintEvent(QPaintEvent *event) override;
+        void resizeEvent(QResizeEvent *) override;
+
     public:
         int width_{};
         int height_{};
@@ -51,6 +55,8 @@ namespace tc
         TcPushButton* btn_cancel_ = nullptr;
         TcPushButton* btn_ok_ = nullptr;
         std::function<void()> closed_callback_;
+        TcCustomTitleBar* title_bar_ = nullptr;
+        int shadow_offset = 15;
     };
 }
 
