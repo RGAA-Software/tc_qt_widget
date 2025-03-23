@@ -28,12 +28,6 @@ namespace tc
 
         explicit SizedMessageBox(const QString& title, bool ok, bool cancel, QWidget* parent = nullptr);
 
-        void Resize(int width, int height) {
-            this->width_ = width;
-            this->height_ = height;
-            setFixedSize(width, height);
-        }
-
         void closeEvent(QCloseEvent *event) override {
             if (closed_callback_) {
                 closed_callback_();
@@ -49,8 +43,6 @@ namespace tc
         void resizeEvent(QResizeEvent *) override;
 
     public:
-        int width_{};
-        int height_{};
         QLabel* lbl_message_ = nullptr;
         TcPushButton* btn_cancel_ = nullptr;
         TcPushButton* btn_ok_ = nullptr;

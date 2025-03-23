@@ -24,6 +24,7 @@ set(SRCS
         tc_pushbutton.cpp
         tc_custom_titlebar.cpp
         tc_custom_titlebar_dialog.cpp
+        tc_dialog.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})

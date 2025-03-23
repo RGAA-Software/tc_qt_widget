@@ -15,7 +15,7 @@ namespace tc
 
     TcCustomTitleBarDialog::TcCustomTitleBarDialog(const QString& title, QWidget* parent) : QMainWindow(parent) {
         setWindowModality(Qt::ApplicationModal);
-        setAttribute(Qt::WA_DeleteOnClose);
+        //setAttribute(Qt::WA_DeleteOnClose);
 
         (new MainWindowWrapper(nullptr, this))
             ->ShowProfile(false)
