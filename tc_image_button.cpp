@@ -10,6 +10,7 @@ namespace tc
 
     TcImageButton::TcImageButton(const QString& uri, const QSize& scale_size, QWidget* parent) : QWidget(parent) {
         img_uri_ = uri;
+        scale_size_ = scale_size;
         if (!img_uri_.contains(".svg")) {
             pixmap_ = QPixmap::fromImage(QImage(uri));
             if (scale_size.width() > 0 && scale_size.height() > 0) {
@@ -19,6 +20,8 @@ namespace tc
         else {
             renderer_.load(img_uri_);
         }
+        setAttribute(Qt::WA_TranslucentBackground, true);
+
     }
 
     void TcImageButton::SetColor(int normal_color, int hover_color, int pressed_color) {
@@ -60,8 +63,12 @@ namespace tc
             painter.drawPixmap((this->width() - pixmap_.width())/2, (this->height() - pixmap_.height())/2, pixmap_);
         }
 
-
-        renderer_.render(&painter, this->rect());
+        if (scale_size_.width() <= 0) {
+            renderer_.render(&painter, this->rect());
+        }
+        else {
+            renderer_.render(&painter, QRect((this->width()-scale_size_.width())/2, (this->height()-scale_size_.height())/2, scale_size_.width(), scale_size_.height()));
+        }
 
     }
 
@@ -83,6 +90,14 @@ namespace tc
     void TcImageButton::mouseReleaseEvent(QMouseEvent *event) {
         pressed_ = false;
         repaint();
+
+        if (click_cbk_) {
+            click_cbk_();
+        }
+    }
+
+    void TcImageButton::SetOnImageButtonClicked(OnImageButtonClicked&& cbk) {
+        click_cbk_ = cbk;
     }
 
 }

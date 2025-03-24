@@ -9,15 +9,19 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QtSvg/QSvgRenderer>
+#include <functional>
 
 namespace tc
 {
+
+    using OnImageButtonClicked = std::function<void()>;
 
     class TcImageButton : public QWidget {
     public:
         explicit TcImageButton(const QString& uri, const QSize& scale_size = QSize(0, 0), QWidget* parent = nullptr);
         void SetColor(int normal_color, int hover_color, int pressed_color);
         void SetRoundRadius(int radius);
+        void SetOnImageButtonClicked(OnImageButtonClicked&& cbk);
 
         void paintEvent(QPaintEvent *event) override;
         void enterEvent(QEnterEvent *event) override;
@@ -35,6 +39,8 @@ namespace tc
         int round_radius_ = 0;
         QString img_uri_;
         QSvgRenderer renderer_;
+        OnImageButtonClicked click_cbk_;
+        QSize scale_size_;
     };
 
 }
