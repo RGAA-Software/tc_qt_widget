@@ -89,6 +89,10 @@ namespace tc
                     continue;
                 }
 
+                if (x >= 24 && x < 33 && y >= 24 && y < 33) {
+                    continue;
+                }
+
                 QRgb rgb = image.pixel(x, y);
                 if (qRed(rgb) == 0 && qGreen(rgb) == 0 && qBlue(rgb) == 0) {
                     painter.setBrush(QBrush(0x111111));
