@@ -48,6 +48,7 @@ namespace tc
                     cbk_cancel_();
                 }
                 this->close();
+                this->deleteLater();
             });
 
             auto btn_ok = new TcPushButton(this);
