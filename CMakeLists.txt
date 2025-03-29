@@ -25,6 +25,7 @@ set(SRCS
         tc_custom_titlebar.cpp
         tc_custom_titlebar_dialog.cpp
         tc_dialog.cpp
+        tc_password_input.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
