@@ -16,6 +16,7 @@ namespace tc
     TcCustomTitleBarDialog::TcCustomTitleBarDialog(const QString& title, QWidget* parent) : QMainWindow(parent) {
         setWindowModality(Qt::ApplicationModal);
         //setAttribute(Qt::WA_DeleteOnClose);
+        setContentsMargins(0, 0, 0, 0);
         title_ = title;
         root_layout_ = new NoMarginVLayout();
         central_widget_ = new QWidget(this);
