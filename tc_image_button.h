@@ -15,6 +15,8 @@ namespace tc
 {
 
     using OnImageButtonClicked = std::function<void()>;
+    using OnImageButtonHovering = std::function<void(QWidget* w)>;
+    using OnImageButtonLeaved = std::function<void(QWidget* w)>;
 
     class TcImageButton : public QWidget {
     public:
@@ -22,6 +24,8 @@ namespace tc
         void SetColor(int normal_color, int hover_color, int pressed_color);
         void SetRoundRadius(int radius);
         void SetOnImageButtonClicked(OnImageButtonClicked&& cbk);
+        void SetOnImageButtonHovering(OnImageButtonHovering&& cbk);
+        void SetOnImageButtonLeaved(OnImageButtonLeaved&& cbk);
 
         void paintEvent(QPaintEvent *event) override;
         void enterEvent(QEnterEvent *event) override;
@@ -40,6 +44,8 @@ namespace tc
         QString img_uri_;
         QSvgRenderer renderer_;
         OnImageButtonClicked click_cbk_;
+        OnImageButtonHovering hovering_cbk_;
+        OnImageButtonLeaved leaved_cbk_;
         QSize scale_size_;
     };
 

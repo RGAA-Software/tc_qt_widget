@@ -75,11 +75,17 @@ namespace tc
     void TcImageButton::enterEvent(QEnterEvent *event) {
         enter_ = true;
         repaint();
+        if (hovering_cbk_) {
+            hovering_cbk_(this);
+        }
     }
 
     void TcImageButton::leaveEvent(QEvent *event) {
         enter_ = false;
         repaint();
+        if (leaved_cbk_) {
+            leaved_cbk_(this);
+        }
     }
 
     void TcImageButton::mousePressEvent(QMouseEvent *event) {
@@ -98,6 +104,14 @@ namespace tc
 
     void TcImageButton::SetOnImageButtonClicked(OnImageButtonClicked&& cbk) {
         click_cbk_ = cbk;
+    }
+
+    void TcImageButton::SetOnImageButtonHovering(OnImageButtonHovering&& cbk) {
+        hovering_cbk_ = cbk;
+    }
+
+    void TcImageButton::SetOnImageButtonLeaved(OnImageButtonLeaved&& cbk) {
+        leaved_cbk_ = cbk;
     }
 
 }
