@@ -12,25 +12,24 @@ namespace tc
 
     TcToolTip::TcToolTip(QWidget* parent) : QWidget(parent) {
         setWindowFlags(Qt::FramelessWindowHint);
-        //setWindowModality(Qt::ApplicationModal);
         setAttribute(Qt::WA_DeleteOnClose);
         setAttribute(Qt::WA_TranslucentBackground);
-        WidgetHelper::AddShadow(this);
+        WidgetHelper::AddShadow(this, 0xaaaaaa, 4);
         auto root_layout = new NoMarginVLayout();
-        root_layout->addSpacing(5);
+        root_layout->addStretch();
 
         auto content_layout = new NoMarginHLayout();
         auto label = new QLabel(this);
         label_ = label;
-        label->setStyleSheet(R"(color: #333333; font-weight: 500; font-size:11px;)");
+        label->setStyleSheet(R"(color: #333333; font-weight: 500; font-size:12px;)");
         label->setWordWrap(true);
-        label->setMinimumHeight(40);
-        content_layout->addSpacing(10);
+        label->setAlignment(Qt::AlignLeft);
+        content_layout->addSpacing(15);
         content_layout->addWidget(label);
-        content_layout->addSpacing(10);
+        content_layout->addSpacing(15);
 
         root_layout->addLayout(content_layout);
-        root_layout->addSpacing(5);
+        root_layout->addStretch();
 
         setLayout(root_layout);
     }
@@ -41,7 +40,7 @@ namespace tc
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QColor(0xe0e0e0));
         painter.setBrush(QBrush(QColor(0xffffff)));
-        painter.drawRoundedRect(QRect(offset, offset, this->width()-offset*2, this->height()-offset*2), 5, 5);
+        painter.drawRoundedRect(QRect(offset, offset, this->width()-offset*2, this->height()-offset*2), 3, 3);
         QWidget::paintEvent(event);
     }
 
