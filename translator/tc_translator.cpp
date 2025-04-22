@@ -3,6 +3,7 @@
 #include <QIODevice>
 #include <QDebug>
 #include <QLocale>
+#include <QApplication>
 #include <iostream>
 #include "json/json.hpp"
 #include "tc_common_new/log.h"
@@ -108,7 +109,9 @@ namespace tc
             path = "./resources/language/english.json";
         }
         this->kind_ = kind;
-        return LoadLanguage(path);
+
+        auto base_dir = QApplication::applicationDirPath();
+        return LoadLanguage(base_dir + "/" + path);
     }
 
     bool TcTranslatorManager::LoadLanguage(const QString &path) {
