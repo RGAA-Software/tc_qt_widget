@@ -5,23 +5,19 @@
 #ifndef GAMMARAY_TC_CUSTOM_TITLEBAR_DIALOG_H
 #define GAMMARAY_TC_CUSTOM_TITLEBAR_DIALOG_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 namespace tc
 {
 
     class NoMarginVLayout;
-    class TcCustomTitleBar;
 
-    class TcCustomTitleBarDialog : public QMainWindow {
+    class TcCustomTitleBarDialog : public QDialog {
     public:
         explicit TcCustomTitleBarDialog(const QString& title, QWidget* parent = nullptr);
-        void Show();
 
     protected:
-        QWidget* central_widget_ = nullptr;
         NoMarginVLayout* root_layout_ = nullptr;
-        QString title_;
     };
 
 }

@@ -10,20 +10,14 @@
 namespace tc
 {
 
-    using OnDialogCancelClicked = std::function<void()>;
-    using OnDialogSureClicked = std::function<void()>;
+    constexpr auto kDoneCancel = 0;
+    constexpr auto kDoneOk = 1;
 
     class TcDialog : public TcCustomTitleBarDialog {
     public:
-        static TcDialog* Make(const QString& title, const QString& msg, QWidget* parent);
-        TcDialog(const QString& title, const QString& msg, QWidget* parent);
-
-        void SetOnDialogSureClicked(OnDialogSureClicked&& cbk);
-        void SetOnDialogCancelClicked(OnDialogCancelClicked&& cbk);
+        TcDialog(const QString& title, const QString& msg, QWidget* parent = nullptr);
 
     private:
-        OnDialogCancelClicked cbk_cancel_;
-        OnDialogSureClicked cbk_sure_;
 
     };
 }

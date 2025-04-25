@@ -10,13 +10,7 @@
 namespace tc
 {
 
-    TcDialog* TcDialog::Make(const QString& title, const QString& msg, QWidget* parent) {
-        auto dlg = new TcDialog(title, msg, parent);
-        return dlg;
-    }
-
     TcDialog::TcDialog(const QString& title, const QString& msg, QWidget* parent) : TcCustomTitleBarDialog(title, parent) {
-        setWindowTitle(title);
         setFixedSize(410, 220);
 
         root_layout_->addSpacing(20);
@@ -44,11 +38,7 @@ namespace tc
             item_layout->addSpacing(20);
 
             connect(btn_cancel, &QPushButton::clicked, this, [=, this]() {
-                if (cbk_cancel_) {
-                    cbk_cancel_();
-                }
-                this->close();
-                this->deleteLater();
+                done(kDoneCancel);
             });
 
             auto btn_ok = new TcPushButton(this);
@@ -58,28 +48,13 @@ namespace tc
             item_layout->addStretch();
 
             connect(btn_ok, &QPushButton::clicked, this, [=, this]() {
-                if (cbk_sure_) {
-                    cbk_sure_();
-                }
-                this->hide();
-                QMetaObject::invokeMethod(this, [=, this]() {
-                    this->close();
-                    this->deleteLater();
-                });
+                done(kDoneOk);
             });
 
             root_layout_->addLayout(item_layout);
         }
         root_layout_->addSpacing(30);
 
-    }
-
-    void TcDialog::SetOnDialogSureClicked(OnDialogSureClicked&& cbk) {
-        cbk_sure_ = cbk;
-    }
-
-    void TcDialog::SetOnDialogCancelClicked(OnDialogCancelClicked&& cbk) {
-        cbk_cancel_ = cbk;
     }
 
 }

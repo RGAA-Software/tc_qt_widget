@@ -11,7 +11,7 @@ namespace tc
 {
 
     TcToolTip::TcToolTip(QWidget* parent) : QWidget(parent) {
-        setWindowFlags(Qt::FramelessWindowHint);
+        setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Tool);
         setAttribute(Qt::WA_DeleteOnClose);
         setAttribute(Qt::WA_TranslucentBackground);
         WidgetHelper::AddShadow(this, 0xaaaaaa, 4);
@@ -38,14 +38,15 @@ namespace tc
         QPainter painter(this);
         auto offset = 5;
         painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(QColor(0xe0e0e0));
+        painter.setPen(QColor(0xeeeeee));
         painter.setBrush(QBrush(QColor(0xffffff)));
         painter.drawRoundedRect(QRect(offset, offset, this->width()-offset*2, this->height()-offset*2), 3, 3);
-        QWidget::paintEvent(event);
+        //QWidget::paintEvent(event);
     }
 
     void TcToolTip::SetText(const QString &text) {
         label_->setText(text);
+        repaint();
     }
 
 }
