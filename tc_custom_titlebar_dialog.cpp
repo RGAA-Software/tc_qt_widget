@@ -14,7 +14,7 @@ namespace tc
 {
 
     TcCustomTitleBarDialog::TcCustomTitleBarDialog(const QString& title, QWidget* parent) : QDialog(parent) {
-        setWindowFlags((windowFlags() | Qt::ExpandedClientAreaHint | Qt::NoTitleBarBackgroundHint) & ~Qt::WindowMinMaxButtonsHint);
+        setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint | Qt::ExpandedClientAreaHint | Qt::NoTitleBarBackgroundHint);
         setModal(true);
         setContentsMargins(0, 0, 0, 0);
         setWindowTitle(title);
