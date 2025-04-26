@@ -30,7 +30,8 @@ namespace tc
         void SetOnEnterWidgetCallback(OnEnterWidgetCallback&& cbk);
         void SetOnClickWidgetCallback(OnClickWidgetCallback&& cbk);
 
-    private:
+    protected:
+        bool mouse_enter_ =  false;
         OnEnterWidgetCallback enter_cbk_;
         OnClickWidgetCallback click_cbk_;
 

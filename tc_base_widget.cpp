@@ -13,6 +13,7 @@ namespace tc
 
     void TcBaseWidget::enterEvent(QEnterEvent *event) {
         QWidget::enterEvent(event);
+        mouse_enter_ = true;
         if (enter_cbk_) {
             enter_cbk_(this, true);
         }
@@ -20,6 +21,7 @@ namespace tc
 
     void TcBaseWidget::leaveEvent(QEvent *event) {
         QWidget::leaveEvent(event);
+        mouse_enter_ = false;
         if (enter_cbk_) {
             enter_cbk_(this, false);
         }
