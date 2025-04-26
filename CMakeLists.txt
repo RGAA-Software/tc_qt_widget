@@ -27,6 +27,7 @@ set(SRCS
         tc_dialog.cpp
         tc_password_input.cpp
         tc_tooltip.cpp
+        tc_base_widget.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
