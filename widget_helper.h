@@ -7,6 +7,7 @@
 
 #include <QLayout>
 #include <QGraphicsDropShadowEffect>
+#include <dwmapi.h>
 
 namespace tc
 {
@@ -25,6 +26,13 @@ namespace tc
             ps->setOffset(0, 0);
             ps->setColor(color);
             w->setGraphicsEffect(ps);
+        }
+
+        static void SetTitleBarColor(QWidget* w, int color = 0xffffff) {
+#ifdef WIN32
+            HWND hwnd = (HWND)w->winId();
+            DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &color, sizeof(color));
+#endif
         }
 
     };
