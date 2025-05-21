@@ -8,6 +8,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
 
 add_subdirectory(translator)
 add_subdirectory(widgetframe)
+add_subdirectory(loadings)
 
 add_compile_options(/bigobj)
 set(SRCS
@@ -46,4 +47,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
         Qt6::OpenGL
         Qt6::OpenGLWidgets
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new tc_translator)
+target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new tc_translator tc_widget_loadings)
