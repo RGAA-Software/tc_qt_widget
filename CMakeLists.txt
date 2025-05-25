@@ -29,6 +29,10 @@ set(SRCS
         tc_password_input.cpp
         tc_tooltip.cpp
         tc_base_widget.cpp
+
+        notify/arrangedwnd.cpp
+        notify/notifymanager.cpp
+        notify/notifywnd.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
