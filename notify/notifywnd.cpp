@@ -3,6 +3,7 @@
 #include <QBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include "no_margin_layout.h"
+#include "tc_qt_widget/tc_image_button.h"
 
 namespace tc
 {
@@ -49,14 +50,15 @@ namespace tc
 
         setLayout(mainLayout);
 
-        closeBtn = new QPushButton(tr("x"), background);
-        closeBtn->setProperty("class", "danger");
-        closeBtn->setStyleSheet("color:#ffffff;");
-        //closeBtn->setFont(sk::SysConfig::Instance()->sys_font_11);
+        closeBtn = new TcImageButton(":/resources/image/ic_close.svg", QSize(20, 20), background);
+        closeBtn->SetColor(0xffffff, 0xdddddd, 0xaaaaaa);
         closeBtn->setObjectName("notify-close-btn");
-        closeBtn->setFixedSize(24, 24);
+        closeBtn->setFixedSize(28, 28);
         closeBtn->move(background->width() - closeBtn->width(), 0);
-        connect(closeBtn, &QPushButton::clicked, this, &QObject::deleteLater);
+        closeBtn->SetOnImageButtonClicked([=, this]() {
+            this->deleteLater();
+        });
+        //connect(closeBtn, &QPushButton::clicked, this, &QObject::deleteLater);
 
         setStyleSheet(m_manager->styleSheet());
 

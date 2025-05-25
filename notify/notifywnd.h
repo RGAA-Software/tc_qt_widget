@@ -8,6 +8,8 @@
 namespace tc
 {
 
+    class TcImageButton;
+
     class NotifyWnd : public ArrangedWnd {
     Q_OBJECT
 
@@ -24,7 +26,7 @@ namespace tc
         QLabel *iconLabel;
         QLabel *titleLabel;
         QLabel *bodyLabel;
-        QPushButton *closeBtn;
+        TcImageButton *closeBtn;
     };
 
 // 队列提示数
