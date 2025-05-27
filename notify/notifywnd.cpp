@@ -54,7 +54,7 @@ namespace tc
         closeBtn->SetColor(0xffffff, 0xdddddd, 0xaaaaaa);
         closeBtn->setObjectName("notify-close-btn");
         closeBtn->setFixedSize(28, 28);
-        closeBtn->move(background->width() - closeBtn->width(), 0);
+        closeBtn->move(background->width() - closeBtn->width() - 5, 5);
         closeBtn->SetOnImageButtonClicked([=, this]() {
             this->deleteLater();
         });
