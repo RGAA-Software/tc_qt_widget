@@ -33,6 +33,8 @@ set(SRCS
         notify/arrangedwnd.cpp
         notify/notifymanager.cpp
         notify/notifywnd.cpp
+
+        pagination/page_widget.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
