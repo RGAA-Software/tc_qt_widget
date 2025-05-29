@@ -70,7 +70,7 @@ namespace tc
         }
 
         if (watched == ui->pageLineEdit && e->type() == QEvent::KeyRelease) {
-            QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+            auto ke = static_cast<QKeyEvent*>(e);
             if (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return) {
                 setCurrentPage(ui->pageLineEdit->text().toInt(), true);
                 //setMaxPage(ui->pageLineEdit->text().toInt());
@@ -135,17 +135,11 @@ namespace tc
 
 
     void PageWidget::initialize() {
-        ui->label->hide();
         ui->pageLineEdit->installEventFilter(this);
         ui->pageLineEdit->setValidator(new QIntValidator(1, 10000000, this));
         ui->pageLineEdit->setFixedSize(QSize(60, 26));
-        //ui->pageLineEdit->setStyleSheet(sk::Style::GetSearchStyle().c_str());
         ui->goto_page->setFixedSize(QSize(60, 26));
         ui->goto_page->setText("Go");
-        //auto go_font = sk::SysConfig::Instance()->sys_font_10_;
-        //go_font.setBold(true);
-        //ui->goto_page->setFont(go_font);
-        //ui->goto_page->setStyleSheet(sk::Style::GetSettingNormalBtnStyle().c_str());
 
         int item_size = 60;
         ui->nextPageLabel->setProperty("page", "true");
@@ -155,11 +149,11 @@ namespace tc
         ui->nextPageLabel->installEventFilter(this);
         ui->previousPageLabel->installEventFilter(this);
 
-        pageLabels = new QList<QLabel *>();
+        pageLabels = new QList<QLabel*>();
 
-        QHBoxLayout *leftLayout = new QHBoxLayout();
-        QHBoxLayout *centerLayout = new QHBoxLayout();
-        QHBoxLayout *rightLayout = new QHBoxLayout();
+        auto leftLayout = new QHBoxLayout();
+        auto centerLayout = new QHBoxLayout();
+        auto rightLayout = new QHBoxLayout();
         leftLayout->setContentsMargins(0, 0, 0, 0);
         leftLayout->setSpacing(0);
         centerLayout->setContentsMargins(0, 0, 0, 0);
@@ -168,7 +162,7 @@ namespace tc
         rightLayout->setSpacing(0);
 
         for (int i = 0; i < blockSize * 3; ++i) {
-            QLabel *label = new QLabel(QString::number(i + 1));
+            auto label = new QLabel(QString::number(i + 1));
             label->setAlignment(Qt::AlignCenter);
             label->setProperty("page", "true");
             label->installEventFilter(this);
@@ -196,7 +190,7 @@ namespace tc
 
         if (maxPage <= blockSize * 3) {
             for (int i = 0; i < pageLabels->count(); i += 1) {
-                QLabel *label = pageLabels->at(i);
+                auto label = pageLabels->at(i);
 
                 if (i < maxPage) {
                     label->setText(QString::number(i + 1));
@@ -240,7 +234,7 @@ namespace tc
         }
 
         for (int i = 0; i < pageLabels->count(); ++i) {
-            QLabel *label = pageLabels->at(i);
+            auto label = pageLabels->at(i);
             int page = label->text().toInt();
             if (page == currentPage) {
                 label->setProperty("currentPage", "true");

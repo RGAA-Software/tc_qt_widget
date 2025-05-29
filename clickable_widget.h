@@ -25,6 +25,7 @@ namespace tc
 
         void SetOnClickListener(OnClickListener&& listener);
         void SetColors(int normal_color, int enter_color, int pressed_color);
+        void SetGradientColor(int from_color, int to_color);
         void SetRadius(int radius);
     protected:
         OnClickListener click_listener_;
@@ -34,6 +35,8 @@ namespace tc
         int enter_color_ = 0xf0f0f0;
         int pressed_color_ = 0xd9d9d9;
         int radius_ = 0;
+        int gr_from_color_ = 0;
+        int gr_to_color_ = 0;
     };
 
 }

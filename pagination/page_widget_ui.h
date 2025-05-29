@@ -24,8 +24,8 @@ public:
     QLabel *rightSeparateLabel;
     QWidget *rightPagesWidget;
     QLabel *nextPageLabel;
-    QSpacerItem *horizontalSpacer_3;
-    QLabel *label;
+    //QSpacerItem *horizontalSpacer_3;
+    //QLabel *label;
     QSpacerItem *horizontalSpacer_5;
     QLineEdit *pageLineEdit;
     QSpacerItem *horizontalSpacer_4;
@@ -95,14 +95,12 @@ public:
 
         horizontalLayout->addWidget(nextPageLabel);
 
-        horizontalSpacer_3 = new QSpacerItem(30, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        //horizontalSpacer_3 = new QSpacerItem(30, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        //horizontalLayout->addItem(horizontalSpacer_3);
 
-        horizontalLayout->addItem(horizontalSpacer_3);
-
-        label = new QLabel(PageWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        horizontalLayout->addWidget(label);
+        //label = new QLabel(PageWidget);
+        //label->setObjectName(QString::fromUtf8("label"));
+        //horizontalLayout->addWidget(label);
 
         horizontalSpacer_5 = new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
@@ -160,7 +158,7 @@ public:
         nextPageLabel->setToolTip(QCoreApplication::translate("PageWidget", "\344\270\213\344\270\200\351\241\265", nullptr));
 #endif // QT_CONFIG(tooltip)
         nextPageLabel->setText(QCoreApplication::translate("PageWidget", "❯", nullptr));
-        label->setText(QCoreApplication::translate("PageWidget", "Page", nullptr));
+        //label->setText(QCoreApplication::translate("PageWidget", "Page", nullptr));
         goto_page->setText(QCoreApplication::translate("PageWidget", "Go", nullptr));
     } // retranslateUi
 

@@ -3,6 +3,7 @@
 //
 
 #include "clickable_widget.h"
+#include <QLinearGradient>
 
 namespace tc
 {
@@ -21,15 +22,24 @@ namespace tc
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setRenderHint(QPainter::TextAntialiasing);
         painter.setPen(Qt::NoPen);
-        if (pressed_) {
-            painter.setBrush(QBrush(pressed_color_));
-        } else if (enter_) {
-            painter.setBrush(QBrush(enter_color_));
-        } else {
-            painter.setBrush(QBrush(normal_color_));
+        if (gr_from_color_ != 0 && gr_to_color_ != 0) {
+            auto gradient = QLinearGradient(QPointF(0, 0), QPointF(this->width(), this->height()));
+            gradient.setColorAt(0, gr_from_color_);
+            gradient.setColorAt(1.0, gr_to_color_);
+            painter.setBrush(QBrush(gradient));
         }
+        else {
+            if (pressed_) {
+                painter.setBrush(QBrush(pressed_color_));
+            } else if (enter_) {
+                painter.setBrush(QBrush(enter_color_));
+            } else {
+                painter.setBrush(QBrush(normal_color_));
+            }
+        }
+
         int offset = 0;
-        painter.drawRoundedRect(offset, offset, this->width()-2*offset, this->height()-2*offset, radius_, radius_);
+        painter.drawRoundedRect(offset, offset, this->width() - 2 * offset, this->height() - 2 * offset, radius_, radius_);
     }
 
     void ClickableWidget::enterEvent(QEnterEvent *event) {
@@ -64,6 +74,12 @@ namespace tc
 
     void ClickableWidget::SetRadius(int radius) {
         this->radius_ = radius;
+        repaint();
+    }
+
+    void ClickableWidget::SetGradientColor(int from_color, int to_color) {
+        gr_from_color_ = from_color;
+        gr_to_color_ = to_color;
         repaint();
     }
 }

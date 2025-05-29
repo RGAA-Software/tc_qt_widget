@@ -19,28 +19,27 @@ namespace tc
 
     class PageWidget : public QWidget {
     Q_OBJECT
-
     public:
         explicit PageWidget(int blockSize = 3, QWidget *parent = 0);
+        ~PageWidget() override;
 
-        ~PageWidget();
+        [[nodiscard]] int getBlockSize() const;
+        [[nodiscard]] int getMaxPage() const;
+        [[nodiscard]] int getCurrentPage() const;
 
-        int getBlockSize() const;
-
-        int getMaxPage() const;
-
-        int getCurrentPage() const;
-
-        // 其他组件只需要调用这两个函数即可
-        void setMaxPage(int maxPage);   // 当总页数改变时调用
-        void setCurrentPage(int currentPage, bool signalEmitted = false); // 修改当前页时调用
+        void setMaxPage(int maxPage);
+        void setCurrentPage(int currentPage, bool signalEmitted = false);
         void setSelectedCallback(OnPageSelectedCallback callback);
 
+    private:
+        void setBlockSize(int blockSize);
+        void updatePageLabels();
+        void initialize();
+
     protected:
-        virtual bool eventFilter(QObject *watched, QEvent *e);
+        bool eventFilter(QObject *watched, QEvent *e) override;
 
     signals:
-
         void currentPageChanged(int page);
 
     private:
@@ -48,15 +47,8 @@ namespace tc
         int blockSize;
         int maxPage;
         int currentPage;
-        QList<QLabel *> *pageLabels;
-
+        QList<QLabel *>* pageLabels;
         OnPageSelectedCallback selected_callback = nullptr;
-
-        void setBlockSize(int blockSize);
-
-        void updatePageLabels();
-
-        void initialize();
     };
 
 }
