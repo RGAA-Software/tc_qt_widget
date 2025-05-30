@@ -16,6 +16,9 @@ namespace tc
     using OnDoubleClickListener = std::function<void(QWidget*)>;
     using OnItemClickListener = std::function<void(int idx, QWidget*)>;
 
+    template<typename T>
+    using OnItemValueClickListener = std::function<void(QWidget*, const std::shared_ptr<T>&)>;
+
 }
 
 #endif //GAMMARAYPC_CLICK_LISTENER_H
