@@ -90,6 +90,11 @@ namespace tc
         if (iconv.type() == QVariant::Pixmap) icon = iconv.value<QPixmap>();
         if (iconv.type() == QVariant::String) icon = QPixmap(iconv.toString());
         else icon = QPixmap(m_manager->defaultIcon());
+
+        if (data.contains("type") && data.value("type") == "err") {
+            icon = QPixmap(m_manager->errorIcon());
+        }
+
         icon = icon.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         iconLabel->setPixmap(icon);
 

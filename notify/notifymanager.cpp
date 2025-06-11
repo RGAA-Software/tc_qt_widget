@@ -13,6 +13,7 @@ namespace tc
         m_spacing = 10;
         m_notifyWndSize = QSize(350, 80);
         m_defaultIcon = ":/resources/image/ic_notify.png";
+        m_errorIcon = ":/resources/image/ic_notify_err.png";
         QString def_style =
                 "#notify-background {"
                 "background: white;"
@@ -46,6 +47,16 @@ namespace tc
         QVariantMap tmp = data;
         tmp.insert("title", title);
         tmp.insert("body", body);
+        tmp.insert("type", "");
+        m_dataQueue.enqueue(tmp);
+        showNext();
+    }
+
+    void NotifyManager::notifyErr(const QString &title, const QString &body, const QVariantMap &data) {
+        QVariantMap tmp = data;
+        tmp.insert("title", title);
+        tmp.insert("body", body);
+        tmp.insert("type", "err");
         m_dataQueue.enqueue(tmp);
         showNext();
     }
@@ -102,6 +113,10 @@ namespace tc
 
     void NotifyManager::setDefaultIcon(const QString &defaultIcon) {
         m_defaultIcon = defaultIcon;
+    }
+
+    QString NotifyManager::errorIcon() const {
+        return m_errorIcon;
     }
 
     QString NotifyManager::styleSheet(const QString &theme) const {

@@ -10,6 +10,8 @@
 #include "tc_qt_widget/widget_helper.h"
 #include "tc_qt_widget/tc_custom_titlebar.h"
 #include "tc_qt_widget/widgetframe/mainwindow_wrapper.h"
+#include <QApplication>
+#include <QScreen>
 
 namespace tc
 {
@@ -27,5 +29,12 @@ namespace tc
 
         root_layout_ = new NoMarginVLayout();
         setLayout(root_layout_);
+    }
+
+    void TcCustomTitleBarDialog::CenterDialog(QDialog* dialog) {
+        QRect screenGeometry = QApplication::primaryScreen()->geometry();
+        int x = (screenGeometry.width() - dialog->width()) / 2;
+        int y = (screenGeometry.height() - dialog->height()) / 2;
+        dialog->move(x, y);
     }
 }

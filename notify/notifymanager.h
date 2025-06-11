@@ -17,6 +17,7 @@ namespace tc
         explicit NotifyManager(QWidget *parent = 0);
 
         void notify(const QString &title, const QString &body, const QVariantMap &data = QVariantMap());
+        void notifyErr(const QString &title, const QString &body, const QVariantMap &data = QVariantMap());
 
         void setMaxCount(int count);
 
@@ -41,8 +42,9 @@ namespace tc
         void setNotifyWndSize(int width, int height);
 
         QString defaultIcon() const;
-
         void setDefaultIcon(const QString &defaultIcon);
+
+        QString errorIcon() const;
 
         QString styleSheet(const QString &theme = "default") const;
 
@@ -71,6 +73,7 @@ namespace tc
         QPoint m_cornerPos;
         QSize m_notifyWndSize;
         QString m_defaultIcon;
+        QString m_errorIcon;
         QMap<QString, QString> m_styleSheets;
     };
 
