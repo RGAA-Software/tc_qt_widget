@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
 
 add_subdirectory(translator)
-add_subdirectory(widgetframe)
+#add_subdirectory(widgetframe)
 add_subdirectory(loadings)
 
 add_compile_options(/bigobj)
