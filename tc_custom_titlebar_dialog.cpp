@@ -19,13 +19,13 @@ namespace tc
     TcCustomTitleBarDialog::TcCustomTitleBarDialog(const QString& title, QWidget* parent) : QDialog(parent) {
         //setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint | Qt::ExpandedClientAreaHint | Qt::NoTitleBarBackgroundHint);
         WidgetHelper::SetTitleBarColor(this);
-        setModal(true);
+        //setModal(true);
         setContentsMargins(0, 0, 0, 0);
         setWindowTitle(title);
 
-        setAttribute(Qt::WA_ShowModal, true);
-        setAttribute(Qt::WA_DeleteOnClose, false);
-        setWindowModality(Qt::ApplicationModal);
+        //setAttribute(Qt::WA_ShowModal, true);
+        //setAttribute(Qt::WA_DeleteOnClose, false);
+        //setWindowModality(Qt::ApplicationModal);
 
         root_layout_ = new NoMarginVLayout();
         setLayout(root_layout_);
