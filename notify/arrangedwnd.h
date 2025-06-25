@@ -12,20 +12,14 @@ namespace tc
 
     class ArrangedWnd : public QWidget {
     Q_OBJECT
-
     public:
         explicit ArrangedWnd(NotifyManager *manager, QWidget *parent = 0);
-
         void mousePressEvent(QMouseEvent *event);
-
         void showArranged(int posIndex);
 
     signals:
-
         void clicked();
-
         void rclicked();
-
         void visibleChanged(bool visible);
 
     protected:

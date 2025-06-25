@@ -2,66 +2,50 @@
 #define NOTIFYMANAGER_H
 
 #include <QtCore>
+#include "notify_defs.h"
 
 namespace tc
 {
 
     class NotifyWnd;
-
     class NotifyCountWnd;
 
     class NotifyManager : public QObject {
     Q_OBJECT
 
     public:
-        explicit NotifyManager(QWidget *parent = 0);
+        explicit NotifyManager(QWidget *parent = nullptr);
 
-        void notify(const QString &title, const QString &body, const QVariantMap &data = QVariantMap());
-        void notifyErr(const QString &title, const QString &body, const QVariantMap &data = QVariantMap());
+        void notify(const NotifyItem& item);
+        void notifyErr(const NotifyItem& item);
 
         void setMaxCount(int count);
-
         int displayTime() const;
-
         void setDisplayTime(int displayTime);
-
         int animateTime() const;
-
         void setAnimateTime(int animateTime);
-
         int spacing() const;
-
         void setSpacing(int spacing);
-
         QPoint cornerPos() const;
-
         void setCornerMargins(int right, int bottom);
-
         QSize notifyWndSize() const;
-
         void setNotifyWndSize(int width, int height);
-
         QString defaultIcon() const;
         void setDefaultIcon(const QString &defaultIcon);
-
         QString errorIcon() const;
-
         QString styleSheet(const QString &theme = "default") const;
-
         void setStyleSheet(const QString &styleSheet, const QString &theme = "default");
-
         void setShowQueueCount(bool isShowQueueCount);
 
     signals:
-
-        void notifyDetail(const QVariantMap &data);
+        void notifyDetail(const NotifyItem& data);
 
     private:
         void showNext();
 
         void showQueueCount();
 
-        QQueue<QVariantMap> m_dataQueue;
+        QQueue<NotifyItem> m_dataQueue;
         QList<NotifyWnd *> m_notifyList;
         NotifyCountWnd *m_notifyCount;
 

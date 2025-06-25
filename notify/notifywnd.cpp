@@ -28,11 +28,9 @@ namespace tc
 
         titleLabel = new QLabel(background);
         titleLabel->setObjectName("notify-title");
-        //titleLabel->setFont(sk::SysConfig::Instance()->sys_font_9);
 
         bodyLabel = new QLabel(background);
         bodyLabel->setObjectName("notify-body");
-        //bodyLabel->setFont(sk::SysConfig::Instance()->sys_font_9);
         bodyLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         bodyLabel->setWordWrap(true);
 
@@ -58,18 +56,17 @@ namespace tc
         closeBtn->SetOnImageButtonClicked([=, this]() {
             this->deleteLater();
         });
-        //connect(closeBtn, &QPushButton::clicked, this, &QObject::deleteLater);
 
         setStyleSheet(m_manager->styleSheet());
 
-        QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+        auto shadow = new QGraphicsDropShadowEffect(this);
         shadow->setOffset(0, 0);
         shadow->setBlurRadius(5);
         background->setGraphicsEffect(shadow);
 
         connect(this, &ArrangedWnd::visibleChanged, [this](bool visible) {
             if (visible) {
-                int displayTime = m_data.value("displayTime", m_manager->displayTime()).toInt();
+                int displayTime = m_manager->displayTime();//m_data.value("displayTime", m_manager->displayTime()).toInt();
                 QTimer::singleShot(displayTime, this, [this]() {
                     showArranged(0);
                 });
@@ -77,45 +74,26 @@ namespace tc
         });
     }
 
-    QVariantMap NotifyWnd::data() const {
+    NotifyItem NotifyWnd::data() const {
         return m_data;
     }
 
-// 需显示后调用
-    void NotifyWnd::setData(const QVariantMap &data) {
+    void NotifyWnd::setData(const NotifyItem& data) {
         m_data = data;
 
-        QPixmap icon;
-        QVariant iconv = data.value("icon");
-        if (iconv.type() == QVariant::Pixmap) icon = iconv.value<QPixmap>();
-        if (iconv.type() == QVariant::String) icon = QPixmap(iconv.toString());
-        else icon = QPixmap(m_manager->defaultIcon());
-
-        if (data.contains("type") && data.value("type") == "err") {
+        auto icon = QPixmap(m_manager->defaultIcon());
+        if (data.type_ == NotifyItemType::kError) {
             icon = QPixmap(m_manager->errorIcon());
         }
 
         icon = icon.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         iconLabel->setPixmap(icon);
 
-        QString title = data.value("title").toString();
+        QString title = data.title_;
         titleLabel->setText(title);
 
-        // 计算可显示行数及长度
-        QString body = m_data.value("body").toString();
+        QString body = m_data.body_;
         bodyLabel->setText(body);
-#if 0
-        QSize s1 = bodyLabel->size();
-        QSize s2 = bodyLabel->fontMetrics().size(Qt::TextSingleLine, body);
-        int linecount = s1.height()/s2.height();
-        int charcount = qFloor(1.0*body.size()*s1.width()/s2.width()) * linecount;
-        QString bodyElid = charcount > body.size() ? body : (body.left(charcount-1)+"...");
-        bodyLabel->setText(bodyElid);
-#endif
-        if (data.contains("styleSheet"))
-            setStyleSheet(data.value("styleSheet").toString());
-        else if (data.contains("theme"))
-            setStyleSheet(m_manager->styleSheet(data.value("theme").toString()));
     }
 
     NotifyCountWnd::NotifyCountWnd(NotifyManager *manager, QWidget *parent)
@@ -130,12 +108,11 @@ namespace tc
         countLabel->setObjectName("notify-count");
         countLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
-        QHBoxLayout *mainLayout = new QHBoxLayout(this);
+        auto mainLayout = new QHBoxLayout(this);
         mainLayout->addWidget(iconLabel);
         mainLayout->addWidget(countLabel);
 
-        // 文字阴影
-        QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+        auto shadow = new QGraphicsDropShadowEffect(this);
         shadow->setOffset(2, 2);
         shadow->setBlurRadius(5);
         setGraphicsEffect(shadow);

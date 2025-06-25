@@ -43,21 +43,13 @@ namespace tc
         m_notifyCount = new NotifyCountWnd(this);
     }
 
-    void NotifyManager::notify(const QString &title, const QString &body, const QVariantMap &data) {
-        QVariantMap tmp = data;
-        tmp.insert("title", title);
-        tmp.insert("body", body);
-        tmp.insert("type", "");
-        m_dataQueue.enqueue(tmp);
+    void NotifyManager::notify(const NotifyItem& item) {
+        m_dataQueue.enqueue(item);
         showNext();
     }
 
-    void NotifyManager::notifyErr(const QString &title, const QString &body, const QVariantMap &data) {
-        QVariantMap tmp = data;
-        tmp.insert("title", title);
-        tmp.insert("body", body);
-        tmp.insert("type", "err");
-        m_dataQueue.enqueue(tmp);
+    void NotifyManager::notifyErr(const NotifyItem& item) {
+        m_dataQueue.enqueue(item);
         showNext();
     }
 
@@ -139,7 +131,7 @@ namespace tc
             return;
         }
 
-        NotifyWnd *notify = new NotifyWnd(this, (QWidget*)parent());
+        auto notify = new NotifyWnd(this, (QWidget*)parent());
         m_notifyList.append(notify);
         notify->showArranged(m_notifyList.size());
         notify->setData(m_dataQueue.dequeue());
@@ -157,9 +149,12 @@ namespace tc
 
         connect(notify, &ArrangedWnd::clicked, this, [notify, this]() {
             notify->deleteLater();
-            QVariantMap data = notify->data();
+            auto data = notify->data();
             QTimer::singleShot(0, this, [this, data]() {
                 emit notifyDetail(data); // 保证窗口先销毁，避免模式窗口阻塞事件
+                if (data.cbk_) {
+                    data.cbk_();
+                }
             });
         });
 

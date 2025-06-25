@@ -4,6 +4,7 @@
 #include "arrangedwnd.h"
 #include <QLabel>
 #include <QPushButton>
+#include "notify_defs.h"
 
 namespace tc
 {
@@ -12,16 +13,13 @@ namespace tc
 
     class NotifyWnd : public ArrangedWnd {
     Q_OBJECT
-
     public:
         explicit NotifyWnd(NotifyManager *manager, QWidget *parent = 0);
-
-        QVariantMap data() const;
-
-        void setData(const QVariantMap &data);
+        NotifyItem data() const;
+        void setData(const NotifyItem &data);
 
     private:
-        QVariantMap m_data;
+        NotifyItem m_data;
         QFrame *background;
         QLabel *iconLabel;
         QLabel *titleLabel;
@@ -29,13 +27,10 @@ namespace tc
         TcImageButton *closeBtn;
     };
 
-// 队列提示数
     class NotifyCountWnd : public ArrangedWnd {
     Q_OBJECT
-
     public:
         explicit NotifyCountWnd(NotifyManager *manager, QWidget *parent = 0);
-
         void setCount(int count);
 
     private:
