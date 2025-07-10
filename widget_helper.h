@@ -30,8 +30,10 @@ namespace tc
 
         static void SetTitleBarColor(QWidget* w, int color = 0xffffff) {
 #ifdef WIN32
-            HWND hwnd = (HWND)w->winId();
-            DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &color, sizeof(color));
+            if (color != -1) {
+                HWND hwnd = (HWND) w->winId();
+                DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &color, sizeof(color));
+            }
 #endif
         }
 
