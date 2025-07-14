@@ -24,6 +24,30 @@ namespace tc
 
     }
 
+    TcImageButton::TcImageButton(const QString& uri, const QString& uri2, const QSize& scale_size, QWidget* parent) : QWidget(parent) {
+        img_uri_ = uri;
+        img_uri2_ = uri2;
+        scale_size_ = scale_size;
+        if (!img_uri_.contains(".svg")) {
+            pixmap_ = QPixmap::fromImage(QImage(uri));
+            if (scale_size.width() > 0 && scale_size.height() > 0) {
+                pixmap_ = pixmap_.scaled(scale_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
+        }
+        else {
+            renderer_.load(img_uri_);
+        }
+
+        if (!img_uri2_.isEmpty() && !img_uri2_.contains(".svg")) {
+            pixmap2_ = QPixmap::fromImage(QImage(img_uri2_));
+            if (scale_size.width() > 0 && scale_size.height() > 0) {
+                pixmap2_ = pixmap2_.scaled(scale_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
+        }
+
+        setAttribute(Qt::WA_TranslucentBackground, true);
+    }
+
     void TcImageButton::SetColor(int normal_color, int hover_color, int pressed_color) {
         this->normal_color_ = normal_color;
         this->hover_color_ = hover_color;
@@ -112,6 +136,16 @@ namespace tc
 
     void TcImageButton::SetOnImageButtonLeaved(OnImageButtonLeaved&& cbk) {
         leaved_cbk_ = cbk;
+    }
+
+    void TcImageButton::ToImage1() {
+        renderer_.load(img_uri_);
+        repaint();
+    }
+
+    void TcImageButton::ToImage2() {
+        renderer_.load(img_uri2_);
+        repaint();
     }
 
 }

@@ -21,11 +21,15 @@ namespace tc
     class TcImageButton : public QWidget {
     public:
         explicit TcImageButton(const QString& uri, const QSize& scale_size = QSize(0, 0), QWidget* parent = nullptr);
+        // SVG images
+        TcImageButton(const QString& uri, const QString& uri2, const QSize& scale_size = QSize(0, 0), QWidget* parent = nullptr);
         void SetColor(int normal_color, int hover_color, int pressed_color);
         void SetRoundRadius(int radius);
         void SetOnImageButtonClicked(OnImageButtonClicked&& cbk);
         void SetOnImageButtonHovering(OnImageButtonHovering&& cbk);
         void SetOnImageButtonLeaved(OnImageButtonLeaved&& cbk);
+        void ToImage1();
+        void ToImage2();
 
         void paintEvent(QPaintEvent *event) override;
         void enterEvent(QEnterEvent *event) override;
@@ -35,6 +39,7 @@ namespace tc
 
     private:
         QPixmap pixmap_;
+        QPixmap pixmap2_;
         bool enter_ = false;
         bool pressed_ = false;
         int normal_color_ = 0;
@@ -42,6 +47,7 @@ namespace tc
         int pressed_color_ = 0;
         int round_radius_ = 0;
         QString img_uri_;
+        QString img_uri2_;
         QSvgRenderer renderer_;
         OnImageButtonClicked click_cbk_;
         OnImageButtonHovering hovering_cbk_;

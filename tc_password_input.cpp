@@ -15,7 +15,7 @@ namespace tc
         remote_pwd->setText("");
         remote_pwd->setStyleSheet(R"(font-size: 16px; font-weight: 700; color: #2979ff;)");
 
-        auto show_password = new TcImageButton(":/resources/image/ic_key.svg", QSize(16, 16), this);
+        auto show_password = new TcImageButton(":/resources/image/ic_pwd_visibility_on.svg", ":/resources/image/ic_pwd_visibility_off.svg", QSize(16, 16), this);
         btn_password_echo_change_ = show_password;
         show_password->SetColor(0xf5f5f5, 0xe9e9e9, 0xd8d8d8);
         show_password->SetRoundRadius(15);
@@ -23,11 +23,14 @@ namespace tc
         show_password->SetOnImageButtonClicked([=, this]() {
             if (remote_pwd->echoMode() == QLineEdit::Password) {
                 remote_pwd->setEchoMode(QLineEdit::Normal);
+                show_password->ToImage1();
             }
             else {
                 remote_pwd->setEchoMode(QLineEdit::Password);
+                show_password->ToImage2();
             }
         });
+        show_password->ToImage2();
     }
 
     void TcPasswordInput::resizeEvent(QResizeEvent *event) {
