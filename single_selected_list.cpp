@@ -35,8 +35,15 @@ namespace tc
         list_->setFlow(QListView::Flow::TopToBottom);
         list_->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
         list_->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-        list_->setStyleSheet("QListWidget {background: #ffffff;}"
-                             "QListWidget::item:selected { background-color: transparent; }");
+        list_->setStyleSheet(R"(QListWidget {
+                                    background: #ffffff;
+                                    border: none;
+                                    outline: 0;
+                                    padding: 0;
+                                    margin: 0;
+                                    gridline-color: transparent;    /* 去除网格线 */
+                                }
+                             QListWidget::item:selected { background-color: transparent; })");
 
         auto layout = new NoMarginVLayout();
         layout->addWidget(list_);
