@@ -34,12 +34,12 @@ namespace tc
         //ui->pageLineEdit->setFont(sk::SysConfig::Instance()->sys_font_11_);
         //ui->goto_page->setFont(sk::SysConfig::Instance()->sys_font_11_);
 
-        connect(ui->goto_page, &QPushButton::clicked, this, [=]() {
+        connect(ui->goto_page, &QPushButton::clicked, this, [=, this]() {
             //setMaxPage(maxPage);
             setCurrentPage(ui->pageLineEdit->text().toInt());
         });
 
-        connect(ui->pageLineEdit, &QLineEdit::returnPressed, this, [=]() {
+        connect(ui->pageLineEdit, &QLineEdit::returnPressed, this, [=, this]() {
             setCurrentPage(ui->pageLineEdit->text().toInt());
         });
     }
@@ -137,11 +137,11 @@ namespace tc
     void PageWidget::initialize() {
         ui->pageLineEdit->installEventFilter(this);
         ui->pageLineEdit->setValidator(new QIntValidator(1, 10000000, this));
-        ui->pageLineEdit->setFixedSize(QSize(60, 26));
-        ui->goto_page->setFixedSize(QSize(60, 26));
+        ui->pageLineEdit->setFixedSize(QSize(50, 26));
+        ui->goto_page->setFixedSize(QSize(50, 26));
         ui->goto_page->setText("Go");
 
-        int item_size = 60;
+        int item_size = 50;
         ui->nextPageLabel->setProperty("page", "true");
         ui->nextPageLabel->setFixedSize((QSize(item_size, 26)));
         ui->previousPageLabel->setProperty("page", "true");
