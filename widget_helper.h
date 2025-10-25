@@ -6,6 +6,8 @@
 #define TC_CLIENT_PC_WIDGET_HELPER_H
 
 #include <QLayout>
+#include <QPainter>
+#include <QSvgRenderer>
 #include <QGraphicsDropShadowEffect>
 #include <dwmapi.h>
 
@@ -35,6 +37,17 @@ namespace tc
                 DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &color, sizeof(color));
             }
 #endif
+        }
+
+        static QPixmap RenderSvgToPixmap(const QString &svgPath, const QSize &size) {
+            QSvgRenderer renderer(svgPath);
+            QPixmap pixmap(size);
+            pixmap.fill(Qt::transparent);
+            QPainter painter(&pixmap);
+            painter.setRenderHint(QPainter::Antialiasing, true);
+            painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+            renderer.render(&painter);
+            return pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
     };

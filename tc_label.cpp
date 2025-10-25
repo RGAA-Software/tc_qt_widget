@@ -31,4 +31,38 @@ namespace tc
         this->setText(tcTr(text_id_));
     }
 
+    void TcLabel::enterEvent(QEnterEvent *event) {
+        enter_ = true;
+        repaint();
+        if (listener_) {
+            cursor_ = cursor();
+            setCursor(Qt::PointingHandCursor);
+        }
+    }
+
+    void TcLabel::leaveEvent(QEvent *event) {
+        enter_ = false;
+        repaint();
+        if (listener_) {
+            setCursor(cursor_);
+        }
+    }
+
+    void TcLabel::mousePressEvent(QMouseEvent *ev) {
+        pressed_ = true;
+        repaint();
+    }
+
+    void TcLabel::mouseReleaseEvent(QMouseEvent *ev) {
+        pressed_ = false;
+        repaint();
+        if (listener_) {
+            listener_(this);
+        }
+    }
+
+    void TcLabel::SetOnClickListener(OnClickListener&& listener) {
+        listener_ = listener;
+    }
+
 }

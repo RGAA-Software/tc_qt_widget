@@ -6,7 +6,7 @@
 #define GAMMARAY_TC_LABEL_H
 
 #include <QLabel>
-
+#include "click_listener.h"
 #include "translator/tc_translator.h"
 
 namespace tc
@@ -19,6 +19,17 @@ namespace tc
 
         void SetTextId(const QString& id) override;
         void OnTranslate(LanguageKind kind) override;
+        void enterEvent(QEnterEvent *event) override;
+        void leaveEvent(QEvent *event) override;
+        void mousePressEvent(QMouseEvent *ev) override;
+        void mouseReleaseEvent(QMouseEvent *ev) override;
+        void SetOnClickListener(OnClickListener&& listener);
+
+    private:
+        bool enter_ = false;
+        bool pressed_ = false;
+        OnClickListener listener_;
+        QCursor cursor_;
     };
 
 }

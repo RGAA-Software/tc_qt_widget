@@ -4,7 +4,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core OpenGL OpenGLWidgets Svg)
 
 add_subdirectory(translator)
 #add_subdirectory(widgetframe)
@@ -52,5 +52,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets
         Qt6::Core
         Qt6::OpenGL
         Qt6::OpenGLWidgets
+        Qt6::Svg
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE tc_common_new tc_translator tc_widget_loadings)
