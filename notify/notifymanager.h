@@ -33,6 +33,7 @@ namespace tc
         QString defaultIcon() const;
         void setDefaultIcon(const QString &defaultIcon);
         QString errorIcon() const;
+        QString warningIcon() const;
         QString styleSheet(const QString &theme = "default") const;
         void setStyleSheet(const QString &styleSheet, const QString &theme = "default");
         void setShowQueueCount(bool isShowQueueCount);
@@ -58,6 +59,7 @@ namespace tc
         QSize m_notifyWndSize;
         QString m_defaultIcon;
         QString m_errorIcon;
+        QString m_warningIcon;
         QMap<QString, QString> m_styleSheets;
     };
 

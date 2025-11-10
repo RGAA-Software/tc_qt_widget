@@ -14,6 +14,7 @@ namespace tc
     enum class NotifyItemType {
         kNormal,
         kError,
+        kWarning,
     };
 
     class NotifyItem {

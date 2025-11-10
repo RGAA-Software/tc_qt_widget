@@ -85,6 +85,9 @@ namespace tc
         if (data.type_ == NotifyItemType::kError) {
             icon = QPixmap(m_manager->errorIcon());
         }
+        else if (data.type_ == NotifyItemType::kWarning) {
+            icon = QPixmap(m_manager->warningIcon());
+        }
 
         icon = icon.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         iconLabel->setPixmap(icon);

@@ -14,6 +14,7 @@ namespace tc
         m_notifyWndSize = QSize(350, 80);
         m_defaultIcon = ":/resources/image/ic_notify.png";
         m_errorIcon = ":/resources/image/ic_notify_err.png";
+        m_warningIcon = ":/resources/image/ic_notify_warn.png";
         QString def_style =
                 "#notify-background {"
                 "background: white;"
@@ -109,6 +110,10 @@ namespace tc
 
     QString NotifyManager::errorIcon() const {
         return m_errorIcon;
+    }
+
+    QString NotifyManager::warningIcon() const {
+        return m_warningIcon;
     }
 
     QString NotifyManager::styleSheet(const QString &theme) const {
