@@ -89,7 +89,7 @@ namespace tc
                     continue;
                 }
 
-                if (x >= 24 && x < 33 && y >= 24 && y < 33) {
+                if (x >= 23 && x < 30 && y >= 23 && y < 30) {
                     continue;
                 }
 
