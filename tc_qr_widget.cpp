@@ -89,7 +89,9 @@ namespace tc
                     continue;
                 }
 
-                if (x >= 23 && x < 30 && y >= 23 && y < 30) {
+                int scaled_icon_size = 6; //==> 18 / 3
+                int offset = (pixmap_.width() - scaled_icon_size)/2;
+                if (x >= offset-1 && x < offset+scaled_icon_size+1 && y >= offset-1 && y < offset+scaled_icon_size+1) {
                     continue;
                 }
 
