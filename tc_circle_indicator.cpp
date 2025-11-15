@@ -11,17 +11,30 @@ namespace tc
 
     }
 
-    TcCircleIndicator::~TcCircleIndicator() {
-
-    }
+    TcCircleIndicator::~TcCircleIndicator() = default;
 
     void TcCircleIndicator::paintEvent(QPaintEvent *event) {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
         QPen pen(0x777777);
         painter.setPen(pen);
-        painter.setBrush(QBrush(0x00ff00));
-        painter.drawRoundedRect(1, 1, this->width()-2, this->height()-2, this->width()/2, this->height()/2);
+        int color = 0x999999;
+        if (state_ == State::kOk) {
+            color = ok_color_;
+        }
+        else if (state_ == State::kError) {
+            color = err_color_;
+        }
+        else if (state_ == State::kWarn) {
+            color = warn_color_;
+        }
+        painter.setBrush(QBrush(color));
+        painter.drawRoundedRect(1, 1, this->width()-2, this->height()-2, this->width()/2.0f, this->height()/2.0f);
+    }
+
+    void TcCircleIndicator::SetState(State st) {
+        state_ = st;
+        update();
     }
 
 }

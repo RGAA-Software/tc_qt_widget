@@ -13,11 +13,25 @@ namespace tc
 
     class TcCircleIndicator : public QWidget {
     public:
-        TcCircleIndicator(QWidget* parent = nullptr);
+
+        enum class State {
+            kOk,
+            kWarn,
+            kError,
+            kUnknown
+        };
+
+        explicit TcCircleIndicator(QWidget* parent = nullptr);
         ~TcCircleIndicator() override;
+        void SetState(State st);
 
         void paintEvent(QPaintEvent *event) override;
 
+    private:
+        State state_ = State::kUnknown;
+        int ok_color_ = 0x00ee00;
+        int warn_color_ = 0xeeee00;
+        int err_color_ = 0xee0000;
     };
 
 }
