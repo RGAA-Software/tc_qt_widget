@@ -38,6 +38,7 @@ namespace tc
             cursor_ = cursor();
             setCursor(Qt::PointingHandCursor);
         }
+        QLabel::enterEvent(event);
     }
 
     void TcLabel::leaveEvent(QEvent *event) {
@@ -46,11 +47,13 @@ namespace tc
         if (listener_) {
             setCursor(cursor_);
         }
+        QLabel::leaveEvent(event);
     }
 
     void TcLabel::mousePressEvent(QMouseEvent *ev) {
         pressed_ = true;
         repaint();
+        QLabel::mousePressEvent(ev);
     }
 
     void TcLabel::mouseReleaseEvent(QMouseEvent *ev) {
@@ -59,6 +62,7 @@ namespace tc
         if (listener_) {
             listener_(this);
         }
+        QLabel::mouseReleaseEvent(ev);
     }
 
     void TcLabel::SetOnClickListener(OnClickListener&& listener) {
