@@ -95,6 +95,8 @@ namespace tc
         int m_extendFrameCount; // 追击帧数
         bool m_animationStop; // 是否停止动画
         QList<qreal> m_frameValues; // 每一帧对应的数值
+
+        QMetaObject::Connection m_conn;
     };
 
 }
