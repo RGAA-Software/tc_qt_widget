@@ -12,30 +12,31 @@ add_subdirectory(loadings)
 
 add_compile_options(/bigobj)
 set(SRCS
-        round_img_display.cpp
-        single_selected_list.cpp
-        clickable_widget.cpp
-        cover_widget.cpp
-        sized_msg_box.cpp
-        custom_tab_btn.cpp
-        tc_image_button.cpp
-        tc_qr_widget.cpp
-        tc_label.cpp
-        tc_font_manager.cpp
-        tc_pushbutton.cpp
-        tc_custom_titlebar.cpp
-        tc_custom_titlebar_dialog.cpp
-        tc_dialog.cpp
-        tc_password_input.cpp
-        tc_tooltip.cpp
-        tc_base_widget.cpp
-        tc_circle_indicator.cpp
+    round_img_display.cpp
+    single_selected_list.cpp
+    clickable_widget.cpp
+    cover_widget.cpp
+    sized_msg_box.cpp
+    custom_tab_btn.cpp
+    tc_image_button.cpp
+    tc_qr_widget.cpp
+    tc_label.cpp
+    tc_font_manager.cpp
+    tc_pushbutton.cpp
+    tc_custom_titlebar.cpp
+    tc_custom_titlebar_dialog.cpp
+    tc_dialog.cpp
+    tc_password_input.cpp
+    tc_tooltip.cpp
+    tc_base_widget.cpp
+    tc_circle_indicator.cpp
+    tc_dialog_util.cpp
 
-        notify/arrangedwnd.cpp
-        notify/notifymanager.cpp
-        notify/notifywnd.cpp
+    notify/arrangedwnd.cpp
+    notify/notifymanager.cpp
+    notify/notifywnd.cpp
 
-        pagination/page_widget.cpp
+    pagination/page_widget.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
