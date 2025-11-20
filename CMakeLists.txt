@@ -37,6 +37,7 @@ set(SRCS
     notify/notifywnd.cpp
 
     pagination/page_widget.cpp
+    image_cropper/image_cropper_label.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRCS})
