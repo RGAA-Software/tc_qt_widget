@@ -16,10 +16,11 @@ namespace tc
     }
 
     void TcLabel::SetTextId(const QString& id) {
+        TcTranslator::SetTextId(id);
         if (id.isEmpty()) {
+            this->setText("");
             return;
         }
-        TcTranslator::SetTextId(id);
         this->setText(tcTr(text_id_));
     }
 
