@@ -13,7 +13,8 @@ namespace tc
 
     class TcDialogUtil {
     public:
-        static QString SelectDirectory(const QString& title, const QString& default_path, QWidget* parent);
+        static QString SelectDirectory(const QString& title, const QString& default_path, QWidget* parent = nullptr);
+        static QString SelectImage(const QString& title, const QString& default_path, QWidget* parent = nullptr);
     };
 
 }

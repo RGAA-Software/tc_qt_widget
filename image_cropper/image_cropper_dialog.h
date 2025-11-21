@@ -35,7 +35,7 @@ namespace tc
                                   CropperShape shape, QSize cropperSize = QSize())
                 : QDialog(0), outputImage(outputImage) {
             this->setAttribute(Qt::WA_DeleteOnClose, true);
-            this->setWindowTitle("Image Cropper");
+            this->setWindowTitle("Edit Image");
             this->setMouseTracking(true);
             this->setModal(true);
 
@@ -46,8 +46,11 @@ namespace tc
             imageLabel->enableOpacity(true);
 
             QHBoxLayout *btnLayout = new QHBoxLayout();
+            int btn_width = 80;
             btnOk = new QPushButton("OK", this);
+            btnOk->setFixedWidth(btn_width);
             btnCancel = new QPushButton("Cancel", this);
+            btnCancel->setFixedWidth(btn_width);
             btnLayout->addStretch();
             btnLayout->addWidget(btnOk);
             btnLayout->addWidget(btnCancel);

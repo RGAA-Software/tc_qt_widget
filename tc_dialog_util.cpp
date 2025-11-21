@@ -19,4 +19,19 @@ namespace tc
         return dir;
     }
 
+    QString TcDialogUtil::SelectImage(const QString& title, const QString& default_path, QWidget* parent) {
+        // 设置图片文件过滤器
+        QString filter = "Image Files (*.png *.jpg *.jpeg)";
+
+        // 弹出文件选择对话框
+        QString fileName = QFileDialog::getOpenFileName(
+                parent,
+                title,
+                default_path,
+                filter
+        );
+
+        return fileName;
+    }
+
 }
