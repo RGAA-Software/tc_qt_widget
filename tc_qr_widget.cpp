@@ -39,7 +39,7 @@ namespace tc
             painter.drawRoundedRect(1, 1, width-2, width-2, width/2, width/2);
 
             painter.setPen(Qt::NoPen);
-            painter.setBrush(QBrush(0x111111));
+            painter.setBrush(QBrush(0x2979ff));
             int offset = 6;
             painter.drawRoundedRect(offset, offset, width-offset*2, width-offset*2, width-offset*2/2, width-offset*2/2);
         }
@@ -55,7 +55,7 @@ namespace tc
             painter.drawRoundedRect(1, y_offset, width-2, width-2, width/2, width/2);
 
             painter.setPen(Qt::NoPen);
-            painter.setBrush(QBrush(0x111111));
+            painter.setBrush(QBrush(0x2979ff));
             int offset = 6;
             painter.drawRoundedRect(offset, y_offset + offset-1, width-offset*2, width-offset*2, width-offset*2/2, width-offset*2/2);
         }
@@ -71,7 +71,7 @@ namespace tc
             painter.drawRoundedRect(x_offset, 1, width-2, width-2, width/2, width/2);
 
             painter.setPen(Qt::NoPen);
-            painter.setBrush(QBrush(0x111111));
+            painter.setBrush(QBrush(0x2979ff));
             int offset = 6;
             painter.drawRoundedRect(x_offset + offset-1, offset, width-offset*2, width-offset*2, width-offset*2/2, width-offset*2/2);
         }
