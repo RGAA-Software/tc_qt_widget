@@ -20,15 +20,21 @@ namespace tc
         ~RoundImageDisplay() override;
         void paintEvent(QPaintEvent *event) override;
         void resizeEvent(QResizeEvent *event) override;
-
+        void mousePressEvent(QMouseEvent *ev) override;
+        void mouseReleaseEvent(QMouseEvent *ev) override;
+        void enterEvent(QEnterEvent *event) override;
+        void leaveEvent(QEvent *event) override;
         void UpdatePixmap(const QPixmap& pixmap);
+        void SetOnClickListener(std::function<void(QWidget* w)>&& l) {
+            click_listener_ = l;
+        }
 
     private:
         QBitmap mask;
         QPixmap pixmap;
         int radius;
-        std::mutex pixmap_mutex_;
-
+        std::function<void(QWidget* w)> click_listener_;
+        QCursor cursor_;
     };
 
 }

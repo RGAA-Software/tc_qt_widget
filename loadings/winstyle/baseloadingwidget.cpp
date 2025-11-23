@@ -12,8 +12,6 @@ namespace tc
               m_animationStop(false),
               m_duration(1000),
               m_extendDuration(150) {
-        m_conn = connect(m_animationTimer, &QTimer::timeout, this,
-                &BaseLoadingWidget::updateFrame);
         updateFrameRate();
     }
 
@@ -51,6 +49,8 @@ namespace tc
     }
 
     void BaseLoadingWidget::start() {
+        m_animationStop = false;
+        m_conn = connect(m_animationTimer, &QTimer::timeout, this, &BaseLoadingWidget::updateFrame);
         m_animationTimer->start();
     }
 

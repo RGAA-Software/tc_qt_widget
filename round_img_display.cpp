@@ -35,7 +35,6 @@ namespace tc
     }
 
     void RoundImageDisplay::UpdatePixmap(const QPixmap& px) {
-        std::lock_guard<std::mutex> guard(pixmap_mutex_);
         this->pixmap = px;
         this->repaint();
     }
@@ -45,8 +44,6 @@ namespace tc
         QPainter painter(this);
         painter.setRenderHints(QPainter::Antialiasing, true);
         painter.setRenderHints(QPainter::SmoothPixmapTransform, true);
-
-        std::lock_guard<std::mutex> guard(pixmap_mutex_);
 
         if (!pixmap.isNull() && painter.isActive()) {
             QPainterPath path;
@@ -59,4 +56,31 @@ namespace tc
         }
 
     }
+
+    void RoundImageDisplay::mousePressEvent(QMouseEvent *ev)  {
+        QLabel::mousePressEvent(ev);
+    }
+
+    void RoundImageDisplay::mouseReleaseEvent(QMouseEvent *ev) {
+        QLabel::mouseReleaseEvent(ev);
+        if (click_listener_) {
+            click_listener_(this);
+        }
+    }
+
+    void RoundImageDisplay::enterEvent(QEnterEvent *event) {
+        if (click_listener_) {
+            cursor_ = cursor();
+            setCursor(Qt::PointingHandCursor);
+        }
+        QLabel::enterEvent(event);
+    }
+
+    void RoundImageDisplay::leaveEvent(QEvent *event) {
+        if (click_listener_) {
+            setCursor(cursor_);
+        }
+        QLabel::leaveEvent(event);
+    }
+
 }
