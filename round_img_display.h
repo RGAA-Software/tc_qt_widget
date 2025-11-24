@@ -25,6 +25,7 @@ namespace tc
         void enterEvent(QEnterEvent *event) override;
         void leaveEvent(QEvent *event) override;
         void UpdatePixmap(const QPixmap& pixmap);
+        void SetBorder(int width, int color);
         void SetOnClickListener(std::function<void(QWidget* w)>&& l) {
             click_listener_ = l;
         }
@@ -35,6 +36,8 @@ namespace tc
         int radius;
         std::function<void(QWidget* w)> click_listener_;
         QCursor cursor_;
+        int border_width_ = 0;
+        int border_color_ = 0;
     };
 
 }

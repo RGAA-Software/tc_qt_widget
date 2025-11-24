@@ -55,6 +55,16 @@ namespace tc
             painter.drawRoundedRect(0, 0, mask.width(), mask.height(), radius, radius);
         }
 
+        if (border_width_ > 0) {
+            painter.setBrush(Qt::NoBrush);
+            QPen pen;
+            pen.setWidth(border_width_);
+            pen.setColor(border_color_);
+            painter.setPen(pen);
+            int offset = border_width_;
+            painter.drawRoundedRect(this->rect(), this->width()/2, this->height()/2);
+        }
+
     }
 
     void RoundImageDisplay::mousePressEvent(QMouseEvent *ev)  {
@@ -81,6 +91,12 @@ namespace tc
             setCursor(cursor_);
         }
         QLabel::leaveEvent(event);
+    }
+
+    void RoundImageDisplay::SetBorder(int width, int color) {
+        border_width_ = width;
+        border_color_ = color;
+        update();
     }
 
 }
