@@ -50,8 +50,11 @@ namespace tc
 
     void BaseLoadingWidget::start() {
         m_animationStop = false;
+        disconnect(m_conn);
         m_conn = connect(m_animationTimer, &QTimer::timeout, this, &BaseLoadingWidget::updateFrame);
-        m_animationTimer->start();
+        if (!m_animationTimer->isActive()) {
+            m_animationTimer->start();
+        }
     }
 
     void BaseLoadingWidget::stop() {
